@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>26.09.2008 — самый яркий лучик ✨</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  :root {
+    --burgundy: #4a0e1a;
+    --burgundy-light: #6b1428;
+    --burgundy-deep: #2b0810;
+    --lace: #fff8f0;
+    --gold: #e8c9a0;
+  }
+
+  body {
+    font-family: 'Georgia', serif;
+    min-height: 100vh;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(107, 20, 40, 0.6), transparent 60%),
+      radial-gradient(circle at 80% 80%, rgba(74, 14, 26, 0.8), transparent 60%),
+      linear-gradient(160deg, var(--burgundy-deep) 0%, var(--burgundy) 40%, var(--burgundy-light) 100%);
+    color: var(--lace);
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* ===== САЛЮТ ===== */
+  #fireworksCanvas {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 3;
+    opacity: 0; transition: opacity 1s ease;
+  }
+  #fireworksCanvas.show { opacity: 1; }
+
+  /* ===== КРУЖЕВО ===== */
+  .lace-bg {
+    position: fixed; inset: 0;
+    pointer-events: none; z-index: 0; opacity: 0.35;
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke='white' stroke-width='0.7' opacity='0.5'><circle cx='40' cy='40' r='8'/><circle cx='40' cy='40' r='14'/><circle cx='0' cy='0' r='8'/><circle cx='80' cy='0' r='8'/><circle cx='0' cy='80' r='8'/><circle cx='80' cy='80' r='8'/><path d='M0 40 Q20 20 40 40 Q60 60 80 40 M40 0 Q20 20 40 40 Q60 60 40 80'/></g></svg>");
+    background-size: 80px 80px;
+  }
+
+  /* ===== ПАДАЮЩИЕ СЕРДЕЧКИ ===== */
+  .hearts-rain {
+    position: fixed; inset: 0;
+    pointer-events: none; overflow: hidden; z-index: 1;
+  }
+  .heart-rain {
+    position: absolute; top: -60px; font-size: 22px;
+    animation: rain linear infinite; opacity: 0.65;
+  }
+  @keyframes rain { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
+
+  /* ===== КОНТЕЙНЕР ===== */
+  .container {
+    position: relative; z-index: 2;
+    max-width: 780px; margin: 0 auto;
+    padding: 40px 20px 80px; text-align: center;
+  }
+
+  /* ===== РАМКА ===== */
+  .frame {
+    position: relative; padding: 45px 25px;
+    background: rgba(255, 248, 240, 0.03); border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 0 40px rgba(232, 201, 160, 0.05);
+  }
+  .frame::before, .frame::after {
+    content: ''; position: absolute; left: 0; right: 0; height: 30px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='30' viewBox='0 0 60 30'><g fill='none' stroke='%23fff8f0' stroke-width='1' opacity='0.85'><path d='M0 30 Q15 5 30 30 Q45 5 60 30'/><circle cx='0' cy='30' r='3'/><circle cx='30' cy='30' r='3'/><circle cx='60' cy='30' r='3'/><circle cx='15' cy='18' r='2'/><circle cx='45' cy='18' r='2'/></g></svg>");
+    background-repeat: repeat-x; background-size: 60px 30px;
+  }
+  .frame::before { top: -15px; transform: scaleY(-1); }
+  .frame::after { bottom: -15px; }
+
+  h1 {
+    font-size: clamp(1.5rem, 5vw, 2.4rem);
+    margin-bottom: 12px; color: var(--lace); letter-spacing: 0.5px;
+    text-shadow: 0 0 20px rgba(232, 201, 160, 0.4); font-style: italic;
+  }
+  .subtitle {
+    color: var(--gold); font-size: 1rem;
+    margin-bottom: 35px; font-style: italic; opacity: 0.9;
+  }
+
+  /* ===== ТАЙМЕР ===== */
+  .timer {
+    display: flex; justify-content: center; gap: 10px;
+    flex-wrap: wrap; margin: 30px 0;
+  }
+  .time-box {
+    background: linear-gradient(145deg, rgba(74, 14, 26, 0.9), rgba(43, 8, 16, 0.9));
+    border: 1px solid rgba(255, 248, 240, 0.35);
+    border-radius: 12px; padding: 18px 10px;
+    min-width: 82px; flex: 1 1 82px; max-width: 115px;
+    position: relative;
+    box-shadow: inset 0 0 20px rgba(232, 201, 160, 0.08), 0 4px 15px rgba(0, 0, 0, 0.3);
+  }
+  .time-box::before, .time-box::after {
+    content: '✦'; position: absolute; color: var(--gold);
+    font-size: 0.7rem; opacity: 0.7;
+  }
+  .time-box::before { top: 5px; left: 7px; }
+  .time-box::after  { bottom: 5px; right: 7px; }
+  .time-num {
+    font-size: clamp(1.6rem, 5vw, 2.2rem); font-weight: bold;
+    color: var(--lace); font-family: 'Courier New', monospace;
+    text-shadow: 0 0 12px rgba(255, 248, 240, 0.5);
+  }
+  .time-label {
+    font-size: 0.72rem; color: var(--gold);
+    text-transform: uppercase; letter-spacing: 2px;
+    margin-top: 6px; font-style: italic;
+  }
+
+  /* ===== КНОПКИ ===== */
+  .btn-row {
+    display: flex; gap: 12px; justify-content: center;
+    flex-wrap: wrap; margin-top: 25px;
+  }
+  .letter-btn {
+    padding: 15px 28px; font-family: 'Georgia', serif;
+    font-size: 0.98rem; font-style: italic; letter-spacing: 1px;
+    color: var(--lace);
+    background: linear-gradient(135deg, var(--burgundy-light), var(--burgundy));
+    border: 1px solid var(--gold); border-radius: 50px;
+    cursor: pointer; position: relative; transition: all 0.4s ease;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(232, 201, 160, 0.1);
+    animation: glow 3s ease-in-out infinite;
+  }
+  .letter-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 35px rgba(232, 201, 160, 0.3);
+  }
+  .letter-btn:active { transform: scale(0.98); }
+  .letter-btn.secret-btn::after {
+    content: '🔒'; position: absolute; top: -6px; right: -6px;
+    font-size: 0.9rem; background: var(--burgundy-deep);
+    border-radius: 50%; width: 24px; height: 24px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--gold);
+  }
+  .letter-btn.secret-btn.unlocked::after { content: '🔓'; }
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(232, 201, 160, 0.1); }
+    50%      { box-shadow: 0 8px 30px rgba(232, 201, 160, 0.4), inset 0 0 25px rgba(232, 201, 160, 0.2); }
+  }
+
+  /* ===== МУЗЫКА ===== */
+  .music-btn {
+    position: fixed; top: 20px; right: 20px;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--burgundy-light), var(--burgundy));
+    border: 1px solid var(--gold); color: var(--lace);
+    font-size: 1.2rem; cursor: pointer; z-index: 50;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(232, 201, 160, 0.15);
+    transition: all 0.3s ease;
+  }
+  .music-btn:hover { transform: scale(1.1); }
+  .music-btn.playing { animation: musicPulse 2s ease-in-out infinite; }
+  @keyframes musicPulse {
+    0%, 100% { box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(232, 201, 160, 0.15); }
+    50%      { box-shadow: 0 4px 25px rgba(232, 201, 160, 0.7), inset 0 0 20px rgba(232, 201, 160, 0.4); }
+  }
+
+  /* ===== МИНИ-ИГРА В СЕРДЕЧКИ ===== */
+  .game-section {
+    margin-top: 50px; padding: 30px 20px;
+    background: rgba(255, 248, 240, 0.04);
+    border: 1px solid rgba(255, 248, 240, 0.15);
+    border-radius: 15px; position: relative;
+  }
+  .game-section::before {
+    content: '❦'; position: absolute; top: -18px; left: 50%;
+    transform: translateX(-50%); background: var(--burgundy);
+    padding: 0 15px; color: var(--gold); font-size: 1.4rem;
+  }
+  .game-title {
+    font-size: 1.2rem; color: var(--gold);
+    font-style: italic; margin-bottom: 8px;
+  }
+  .game-hint {
+    font-size: 0.9rem; color: rgba(255, 248, 240, 0.7);
+    margin-bottom: 20px;
+  }
+  .score {
+    font-size: 2rem; color: var(--lace);
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 20px rgba(255, 248, 240, 0.6); margin: 10px 0;
+  }
+  .score span {
+    font-size: 0.9rem; font-family: 'Georgia', serif;
+    color: var(--gold); font-style: italic; margin-left: 8px;
+  }
+  .achievements {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    justify-content: center; margin-top: 20px;
+  }
+  .ach {
+    padding: 8px 14px; font-size: 0.8rem; border-radius: 20px;
+    border: 1px solid rgba(255, 248, 240, 0.25);
+    background: rgba(43, 8, 16, 0.6);
+    color: rgba(255, 248, 240, 0.4);
+    transition: all 0.5s ease; font-style: italic;
+  }
+  .ach.unlocked {
+    background: linear-gradient(135deg, var(--burgundy-light), var(--burgundy));
+    border-color: var(--gold); color: var(--lace);
+    box-shadow: 0 0 20px rgba(232, 201, 160, 0.5);
+    animation: pop 0.5s ease;
+  }
+  @keyframes pop {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+
+  /* ===== ЛЕТАЮЩЕЕ СЕРДЦЕ ===== */
+  .click-heart {
+    position: fixed; font-size: 42px; cursor: pointer;
+    user-select: none; z-index: 5;
+    filter: drop-shadow(0 0 15px rgba(255, 77, 136, 0.7));
+    animation: float 4s ease-in-out infinite;
+    transition: transform 0.15s ease;
+  }
+  .click-heart:active { transform: scale(0.8); }
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(-3deg); }
+    50%      { transform: translateY(-15px) rotate(3deg); }
+  }
+  .pop-effect {
+    position: fixed; pointer-events: none; font-size: 1.2rem;
+    color: var(--lace); font-family: 'Courier New', monospace; font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 248, 240, 0.9); z-index: 6;
+    animation: popUp 0.9s ease-out forwards;
+  }
+  @keyframes popUp {
+    0%   { opacity: 1; transform: translateY(0) scale(0.8); }
+    100% { opacity: 0; transform: translateY(-70px) scale(1.4); }
+  }
+  .mini-heart {
+    position: fixed; pointer-events: none; font-size: 16px;
+    z-index: 4; animation: flyOut 0.8s ease-out forwards;
+  }
+  @keyframes flyOut {
+    0%   { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.3); }
+  }
+
+  /* ===== МОДАЛКИ ===== */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(20, 4, 8, 0.92); backdrop-filter: blur(8px);
+    z-index: 100; display: none;
+    align-items: center; justify-content: center;
+    padding: 20px; opacity: 0; transition: opacity 0.4s ease;
+  }
+  .modal-overlay.active { display: flex; opacity: 1; }
+  .modal {
+    background: linear-gradient(160deg, var(--burgundy) 0%, var(--burgundy-deep) 100%);
+    border: 1px solid var(--gold); border-radius: 15px;
+    max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto;
+    padding: 40px 25px; position: relative;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), inset 0 0 60px rgba(232, 201, 160, 0.08);
+    transform: scale(0.9); transition: transform 0.4s ease;
+  }
+  .modal-overlay.active .modal { transform: scale(1); }
+  .modal::before, .modal::after {
+    content: ''; position: absolute; left: 15px; right: 15px; height: 20px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='20' viewBox='0 0 40 20'><g fill='none' stroke='%23e8c9a0' stroke-width='0.8' opacity='0.9'><path d='M0 20 Q10 2 20 20 Q30 2 40 20'/><circle cx='0' cy='20' r='2'/><circle cx='20' cy='20' r='2'/><circle cx='40' cy='20' r='2'/></g></svg>");
+    background-repeat: repeat-x; background-size: 40px 20px;
+  }
+  .modal::before { top: 10px; transform: scaleY(-1); }
+  .modal::after  { bottom: 10px; }
+
+  .close-btn {
+    position: absolute; top: 15px; right: 20px;
+    background: none; border: none; color: var(--gold);
+    font-size: 2rem; cursor: pointer; font-family: 'Georgia', serif;
+    line-height: 1; transition: transform 0.3s ease; z-index: 2;
+  }
+  .close-btn:hover { transform: rotate(90deg); }
+  .modal-title {
+    text-align: center; font-size: 1.4rem; font-style: italic;
+    color: var(--gold); margin-bottom: 25px; letter-spacing: 1px;
+  }
+
+  /* ===== ФОТО ===== */
+  .photo-row {
+    display: flex; gap: 12px; justify-content: center;
+    flex-wrap: wrap; margin-bottom: 25px;
+  }
+  .photo-frame {
+    width: 130px; height: 160px;
+    border: 2px solid var(--gold); border-radius: 6px; overflow: hidden;
+    background: rgba(255, 248, 240, 0.05);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+    transform: rotate(-3deg); transition: transform 0.3s ease;
+  }
+  .photo-frame:nth-child(2) { transform: rotate(2deg); }
+  .photo-frame:nth-child(3) { transform: rotate(-1deg); }
+  .photo-frame:hover { transform: rotate(0deg) scale(1.05); z-index: 3; }
+  .photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-placeholder {
+    color: rgba(255, 248, 240, 0.4); font-size: 0.75rem;
+    text-align: center; padding: 10px; font-style: italic;
+  }
+
+  /* ===== ТЕКСТ ПОСЛАНИЙ ===== */
+  .letter-text {
+    text-align: center; line-height: 1.9; font-size: 1.05rem;
+    color: var(--lace); padding: 0 10px; font-style: italic;
+  }
+  .letter-text .date {
+    display: block; font-size: 1.3rem; color: var(--gold);
+    margin-bottom: 15px; letter-spacing: 2px;
+    font-style: normal; font-weight: bold;
+  }
+  .letter-text .highlight {
+    color: var(--gold); text-shadow: 0 0 15px rgba(232, 201, 160, 0.5);
+  }
+  .letter-sign {
+    text-align: right; margin-top: 25px; color: var(--gold);
+    font-style: italic; font-size: 1rem; padding-right: 15px;
+  }
+
+  /* ===== "СКОЛЬКО ПРОШЛО" ===== */
+  .elapsed-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 20px 0;
+  }
+  .elapsed-box {
+    background: rgba(43, 8, 16, 0.7);
+    border: 1px solid rgba(232, 201, 160, 0.35);
+    border-radius: 10px;
+    padding: 14px 8px;
+    text-align: center;
+  }
+  .elapsed-num {
+    font-size: 1.5rem; color: var(--lace);
+    font-family: 'Courier New', monospace; font-weight: bold;
+    text-shadow: 0 0 12px rgba(255, 248, 240, 0.5);
+  }
+  .elapsed-label {
+    font-size: 0.65rem; color: var(--gold);
+    text-transform: uppercase; letter-spacing: 1.5px;
+    margin-top: 4px; font-style: italic;
+  }
+  .elapsed-total {
+    text-align: center;
+    margin: 20px 0 10px;
+    font-size: 1.1rem;
+    color: var(--gold);
+    font-style: italic;
+    line-height: 1.7;
+  }
+  .elapsed-total b {
+    font-size: 1.6rem;
+    color: var(--lace);
+    font-family: 'Courier New', monospace;
+    display: inline-block;
+    margin: 0 6px;
+    text-shadow: 0 0 15px rgba(255, 248, 240, 0.5);
+  }
+
+  /* ===== ПЛЕЙЛИСТ ===== */
+  .playlist {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 25px;
+  }
+  .pl-track {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1px solid rgba(232, 201, 160, 0.25);
+    background: rgba(43, 8, 16, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-style: italic;
+  }
+  .pl-track:hover { border-color: var(--gold); background: rgba(107, 20, 40, 0.5); }
+  .pl-track.active {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, rgba(107, 20, 40, 0.9), rgba(74, 14, 26, 0.9));
+    box-shadow: 0 0 20px rgba(232, 201, 160, 0.3);
+  }
+  .pl-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(232, 201, 160, 0.15);
+    color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    font-family: 'Courier New', monospace;
+    flex-shrink: 0;
+  }
+  .pl-track.active .pl-num {
+    background: var(--gold);
+    color: var(--burgundy-deep);
+  }
+  .pl-info { flex: 1; text-align: left; }
+  .pl-title { color: var(--lace); font-size: 0.95rem; margin-bottom: 2px; }
+  .pl-artist { color: rgba(232, 201, 160, 0.7); font-size: 0.75rem; }
+  .pl-playing {
+    color: var(--gold); font-size: 1rem;
+    animation: plPulse 1s infinite;
+  }
+  @keyframes plPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .playlist-controls {
+    display: flex; justify-content: center; align-items: center;
+    gap: 15px; margin-bottom: 20px;
+  }
+  .pl-btn {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: rgba(43, 8, 16, 0.7);
+    border: 1px solid rgba(232, 201, 160, 0.4);
+    color: var(--gold);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s ease;
+    font-family: 'Georgia', serif;
+  }
+  .pl-btn:hover { border-color: var(--gold); background: rgba(107, 20, 40, 0.6); transform: scale(1.08); }
+  .pl-play {
+    width: 60px; height: 60px;
+    font-size: 1.3rem;
+    background: linear-gradient(135deg, var(--burgundy-light), var(--burgundy));
+    border-color: var(--gold);
+    box-shadow: 0 4px 15px rgba(232, 201, 160, 0.3);
+  }
+  .pl-play:hover { box-shadow: 0 6px 25px rgba(232, 201, 160, 0.5); }
+
+  .pl-progress-wrap { padding: 0 5px; }
+  .pl-progress {
+    width: 100%; height: 6px;
+    background: rgba(255, 248, 240, 0.1);
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .pl-progress-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, #ff4d88, #e8c9a0);
+    border-radius: 3px;
+    transition: width 0.1s linear;
+  }
+  .pl-time {
+    display: flex; justify-content: space-between;
+    margin-top: 8px;
+    font-size: 0.75rem;
+    color: rgba(232, 201, 160, 0.8);
+    font-family: 'Courier New', monospace;
+  }
+
+  /* ===== КОСМИЧЕСКАЯ ИГРА ===== */
+  .space-overlay {
+    position: fixed; inset: 0;
+    background: #0a0005;
+    z-index: 200;
+    display: none;
+    flex-direction: column;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .space-overlay.active { display: flex; opacity: 1; }
+
+  .space-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 15px 20px;
+    background: linear-gradient(180deg, rgba(43, 8, 16, 0.95), rgba(43, 8, 16, 0.7));
+    border-bottom: 1px solid rgba(232, 201, 160, 0.3);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 3;
+    gap: 10px;
+  }
+  .space-title {
+    font-style: italic;
+    color: var(--gold);
+    font-size: 1rem;
+    text-shadow: 0 0 10px rgba(232, 201, 160, 0.5);
+  }
+  .space-stats {
+    display: flex; gap: 15px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.95rem;
+    color: var(--lace);
+  }
+  .space-stats b { color: var(--gold); font-size: 1.05rem; }
+  .space-buttons { display: flex; gap: 8px; }
+  .space-icon-btn {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: rgba(43, 8, 16, 0.8);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.3s ease;
+  }
+  .space-icon-btn:hover { transform: scale(1.1); background: rgba(107, 20, 40, 0.8); }
+  .space-icon-btn.off { opacity: 0.45; border-color: rgba(232, 201, 160, 0.4); }
+
+  .space-progress {
+    height: 6px;
+    background: rgba(255, 248, 240, 0.1);
+    margin: 0 20px 10px;
+    border-radius: 3px;
+    overflow: hidden;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 3;
+  }
+  #spaceProgressBar {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, #ff4d88, #ffb6d5, #e8c9a0);
+    transition: width 0.4s ease;
+    box-shadow: 0 0 15px rgba(255, 77, 136, 0.7);
+  }
+
+  .space-canvas-wrap {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    min-height: 0;
+  }
+  #spaceCanvas {
+    display: block;
+    width: 100%; height: 100%;
+    touch-action: none;
+    cursor: crosshair;
+  }
+
+  .space-message {
+    position: absolute; inset: 0;
+    background: rgba(10, 0, 5, 0.9);
+    backdrop-filter: blur(6px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 20px;
+    z-index: 4;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.4s ease;
+  }
+  .space-message.active {
+    opacity: 1; pointer-events: auto;
+  }
+  .space-msg-content {
+    text-align: center;
+    max-width: 340px;
+    animation: pop 0.6s ease;
+  }
+  .space-msg-emoji {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    letter-spacing: 6px;
+  }
+  .space-msg-title {
+    font-size: 1.4rem;
+    color: var(--gold);
+    font-style: italic;
+    margin-bottom: 12px;
+    text-shadow: 0 0 20px rgba(232, 201, 160, 0.5);
+  }
+  .space-msg-text {
+    color: rgba(255, 248, 240, 0.85);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    font-style: italic;
+    margin-bottom: 20px;
+  }
+
+  .space-close {
+    position: absolute;
+    top: 12px; right: 12px;
+    background: rgba(43, 8, 16, 0.8);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    font-size: 1.4rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+    line-height: 1;
+    transition: transform 0.3s ease;
+  }
+  .space-close:hover { transform: rotate(90deg); }
+
+  .space-hint {
+    text-align: center;
+    color: rgba(232, 201, 160, 0.7);
+    font-style: italic;
+    font-size: 0.8rem;
+    padding: 10px;
+    flex-shrink: 0;
+  }
+
+  /* ===== РЕЖИМ ПРАЗДНИКА ===== */
+  .celebrate h1 { animation: celebratePulse 1.5s infinite; }
+  @keyframes celebratePulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.05); }
+  }
+  .celebration-banner {
+    display: none; font-size: 2rem;
+    margin: 15px 0; letter-spacing: 10px;
+  }
+  .celebrate .celebration-banner { display: block; animation: pop 0.8s ease; }
+  .celebrate .timer { display: none; }
+
+  /* ===== АДАПТИВ ===== */
+  @media (max-width: 500px) {
+    .frame { padding: 35px 15px; }
+    .time-box { min-width: 70px; padding: 14px 8px; }
+    .time-num { font-size: 1.5rem; }
+    .time-label { font-size: 0.65rem; letter-spacing: 1.2px; }
+    .click-heart { font-size: 34px; }
+    .photo-frame { width: 100px; height: 130px; }
+    .music-btn { width: 42px; height: 42px; font-size: 1rem; }
+    .letter-btn { padding: 13px 22px; font-size: 0.9rem; }
+    .elapsed-num { font-size: 1.2rem; }
+    .elapsed-label { font-size: 0.58rem; letter-spacing: 1px; }
+    .space-title { font-size: 0.8rem; }
+    .space-stats { font-size: 0.78rem; gap: 8px; }
+    .space-icon-btn { width: 34px; height: 34px; font-size: 0.9rem; }
+    .space-header { padding: 12px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="lace-bg"></div>
+<div class="hearts-rain" id="heartsRain"></div>
+<canvas id="fireworksCanvas"></canvas>
+
+<button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="Включить музыку">🎵</button>
+
+<audio id="bgMusic" loop preload="auto"></audio>
+<audio id="gameMusic" loop preload="auto"></audio>
+
+<div class="container">
+  <div class="frame" id="frame">
+    <h1 id="title">До самого волшебного дня…</h1>
+    <p class="subtitle" id="subtitle">26 сентября 2008 года родился самый яркий лучик ✨</p>
+
+    <div class="celebration-banner">🎉 🎂 🎈 🎁 🎊</div>
+
+    <div class="timer" id="timer">
+      <div class="time-box"><div class="time-num" id="days">0</div><div class="time-label">дней</div></div>
+      <div class="time-box"><div class="time-num" id="hours">0</div><div class="time-label">часов</div></div>
+      <div class="time-box"><div class="time-num" id="minutes">0</div><div class="time-label">минут</div></div>
+      <div class="time-box"><div class="time-num" id="seconds">0</div><div class="time-label">секунд</div></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="letter-btn" onclick="openLetter()">💌 Послание</button>
+      <button class="letter-btn" onclick="openElapsed()">⏳ Сколько уже прошло</button>
+      <button class="letter-btn secret-btn" id="secretBtn" onclick="openSecret()">🔒 Секретное</button>
+      <button class="letter-btn" onclick="openPlaylist()">🎶 Наш плейлист</button>
+      <button class="letter-btn" onclick="openSpaceGame()">🚀 Космос</button>
+    </div>
+
+    <div class="game-section">
+      <div class="game-title">❦ Лови сердечки ❦</div>
+      <div class="game-hint">Тапай по сердечку, которое летает по экрану</div>
+      <div class="score"><span id="score">0</span> <span>сердечек поймано</span></div>
+
+      <div class="achievements" id="achievements">
+        <div class="ach" data-need="5">💗 Первое сердечко · 5</div>
+        <div class="ach" data-need="25">💖 Сердцеедка · 25</div>
+        <div class="ach" data-need="50">💕 Романтик · 50</div>
+        <div class="ach" data-need="100">💘 Коллекционер · 100</div>
+        <div class="ach" data-need="200">👑 Легенда · 200</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== МОДАЛКА: ПОСЛАНИЕ ===== -->
+<div class="modal-overlay" id="letterModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('letterModal')">×</button>
+    <div class="modal-title">❦ Послание для тебя ❦</div>
+
+    <div class="photo-row">
+      <div class="photo-frame"><img src="https://i.ibb.co/1tqQn209/IMG-9868.jpg" alt="Детское фото 1"></div>
+      <div class="photo-frame"><img src="https://i.ibb.co/2Lyy6MS/226-C5-A64-CD82-429-C-A594-F825-B9-F04859.png" alt="Детское фото 2"></div>
+      <div class="photo-frame"><img src="https://i.ibb.co/HLWCWpHx/IMG-0140.png" alt="Детское фото 3"></div>
+    </div>
+
+    <div class="letter-text">
+      <span class="date">26 сентября 2008 года</span>
+      На свет появился <span class="highlight">самый яркий лучик</span>,<br>
+      который озаряет жизнь многих людей…<br>
+      <span class="highlight">в том числе и мою</span> ✨
+    </div>
+    <div class="letter-sign">— с любовью ❤️</div>
+  </div>
+</div>
+
+<!-- ===== МОДАЛКА: СКОЛЬКО ПРОШЛО ===== -->
+<div class="modal-overlay" id="elapsedModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('elapsedModal')">×</button>
+    <div class="modal-title">⏳ С того самого дня…</div>
+
+    <div class="letter-text" style="margin-bottom:20px;">
+      <span class="date">с 26 сентября 2008</span>
+      <span class="highlight">уже прошло</span>
+    </div>
+
+    <div class="elapsed-grid">
+      <div class="elapsed-box"><div class="elapsed-num" id="elYears">0</div><div class="elapsed-label">лет</div></div>
+      <div class="elapsed-box"><div class="elapsed-num" id="elMonths">0</div><div class="elapsed-label">месяцев</div></div>
+      <div class="elapsed-box"><div class="elapsed-num" id="elDays">0</div><div class="elapsed-label">дней</div></div>
+      <div class="elapsed-box"><div class="elapsed-num" id="elHours">00</div><div class="elapsed-label">часов</div></div>
+      <div class="elapsed-box"><div class="elapsed-num" id="elMins">00</div><div class="elapsed-label">минут</div></div>
+      <div class="elapsed-box"><div class="elapsed-num" id="elSecs">00</div><div class="elapsed-label">секунд</div></div>
+    </div>
+
+    <div class="elapsed-total">
+      Это целых <b id="elTotalDays">0</b> дней<br>
+      <span style="font-size:0.9rem;opacity:0.8;">с того самого дня, когда мир стал ярче ✨</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== МОДАЛКА: СЕКРЕТ ===== -->
+<div class="modal-overlay" id="secretModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('secretModal')">×</button>
+    <div class="modal-title">❦ Секретное послание ❦</div>
+    <div class="letter-text" id="secretContent">
+      <span class="date">🔒 Запечатано до 26.09.2026</span>
+      Это послание откроется только в твой день рождения —<br>
+      когда часы пробьют полночь и начнётся <span class="highlight">твой день</span>.<br><br>
+      Немного терпения, любимая… <span class="highlight">✨</span>
+    </div>
+    <div class="letter-sign" id="secretSign">— тот, кто очень ждёт ❤️</div>
+  </div>
+</div>
+
+<!-- ===== МОДАЛКА: ПЛЕЙЛИСТ ===== -->
+<div class="modal-overlay" id="playlistModal">
+  <div class="modal">
+    <button class="close-btn" onclick="closeModal('playlistModal')">×</button>
+    <div class="modal-title">🎶 Наш плейлист</div>
+
+    <div class="playlist" id="playlistContainer"></div>
+
+    <div class="playlist-controls">
+      <button class="pl-btn" id="plPrev" onclick="playlistPrev()">⏮</button>
+      <button class="pl-btn pl-play" id="plPlay" onclick="playlistToggle()">▶</button>
+      <button class="pl-btn" id="plNext" onclick="playlistNext()">⏭</button>
+    </div>
+
+    <div class="pl-progress-wrap">
+      <div class="pl-progress" id="plProgress" onclick="playlistSeek(event)">
+        <div class="pl-progress-fill" id="plProgressFill"></div>
+      </div>
+      <div class="pl-time">
+        <span id="plCurrent">0:00</span>
+        <span id="plDuration">0:00</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== КОСМИЧЕСКАЯ ИГРА ===== -->
+<div class="space-overlay" id="spaceOverlay">
+  <button class="space-close" onclick="closeSpaceGame()">×</button>
+
+  <div class="space-header">
+    <div class="space-title">🚀 Космическая миссия</div>
+    <div class="space-stats">
+      <span>💗 <b id="spaceScore">0</b> / 1000</span>
+      <span>Ур. <b id="spaceLevel">1</b></span>
+    </div>
+    <div class="space-buttons">
+      <button class="space-icon-btn" id="gamePauseBtn" onclick="toggleGamePause()" title="Пауза">⏸</button>
+      <button class="space-icon-btn" id="gameMusicBtn" onclick="toggleGameMusic()" title="Музыка">🎵</button>
+    </div>
+  </div>
+
+  <div class="space-progress">
+    <div id="spaceProgressBar"></div>
+  </div>
+
+  <div class="space-canvas-wrap">
+    <canvas id="spaceCanvas"></canvas>
+
+    <div class="space-message active" id="spaceMessage">
+      <div class="space-msg-content" id="spaceMsgContent">
+        <div class="space-msg-emoji">🚀💗🤡</div>
+        <div class="space-msg-title">Собери 1000 сердец!</div>
+        <p class="space-msg-text">
+          Веди ракету пальцем или мышкой.<br>
+          Лови 💗 (+10) и уворачивайся от клоунов 🤡 (−30)
+        </p>
+        <button class="letter-btn" onclick="startSpaceGame()">▶ Начать полёт</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="space-hint">👆 Веди ракету — она следует за твоим пальцем</div>
+</div>
+
+<script>
+  /* ================= НАСТРОЙКИ ================= */
+  const BIRTHDAY   = new Date(2026, 8, 26, 0, 0, 0);
+  const BIRTH_DATE = new Date(2008, 8, 26, 0, 0, 0);
+
+  const MAIN_MUSIC_SRC = "https://files.catbox.moe/epd5ed.mp3";
+  const PLAYLIST_TRACKS = [
+    { title: "Трек 1", artist: "Наш плейлист", src: "https://files.catbox.moe/6nwcj1.mp3" },
+    { title: "Трек 2", artist: "Наш плейлист", src: "https://files.catbox.moe/2dnkfo.mp3" }
+  ];
+  const GAME_MUSIC_SRC = "https://files.catbox.moe/thhkjj.mp3";
+
+  const SECRET_TEXT = `
+    <span class="date">26 сентября 2026 — твой день ✨</span>
+    Любимая, если ты это читаешь — значит, наступил твой день рождения 🎂<br><br>
+    Я хочу сказать тебе то, что говорю каждый день, но сегодня — особенно:<br>
+    <span class="highlight">ты — моё самое большое чудо</span>.<br><br>
+    Спасибо, что ты есть. Спасибо за твой смех, за твои глаза, за каждый момент рядом.<br>
+    Пусть этот год принесёт тебе всё, о чём ты мечтаешь — и даже больше 💫<br><br>
+    <span class="highlight">Я тебя очень люблю ❤️</span>
+  `;
+
+  /* ================= ТАЙМЕР ДО ДР ================= */
+  function updateTimer() {
+    const frame = document.getElementById('frame');
+    const now = new Date();
+    const diff = BIRTHDAY - now;
+
+    const isToday = now.getDate() === 26 && now.getMonth() === 8 && now.getFullYear() === 2026;
+    if (isToday) {
+      frame.classList.add('celebrate');
+      document.getElementById('title').textContent = 'С Днём Рождения! 🎂';
+      document.getElementById('subtitle').textContent = 'Сегодня твой день — самый лучший день в году!';
+      unlockSecret();
+      startFireworks();
+      return;
+    }
+    if (diff <= 0) {
+      document.getElementById('days').textContent = '0';
+      document.getElementById('hours').textContent = '00';
+      document.getElementById('minutes').textContent = '00';
+      document.getElementById('seconds').textContent = '00';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff / 3600000) % 24);
+    const m = Math.floor((diff / 60000) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+    document.getElementById('days').textContent    = d;
+    document.getElementById('hours').textContent   = String(h).padStart(2, '0');
+    document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+    document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+  }
+  updateTimer();
+  setInterval(updateTimer, 1000);
+
+  /* ================= СКОЛЬКО ПРОШЛО ================= */
+  function updateElapsed() {
+    const now = new Date();
+    if (now < BIRTH_DATE) return;
+
+    let years   = now.getFullYear() - BIRTH_DATE.getFullYear();
+    let months  = now.getMonth() - BIRTH_DATE.getMonth();
+    let days    = now.getDate() - BIRTH_DATE.getDate();
+    let hours   = now.getHours() - BIRTH_DATE.getHours();
+    let minutes = now.getMinutes() - BIRTH_DATE.getMinutes();
+    let seconds = now.getSeconds() - BIRTH_DATE.getSeconds();
+
+    if (seconds < 0) { seconds += 60; minutes--; }
+    if (minutes < 0) { minutes += 60; hours--; }
+    if (hours < 0)   { hours += 24; days--; }
+    if (days < 0) {
+      const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+      days += prevMonth.getDate();
+      months--;
+    }
+    if (months < 0) { months += 12; years--; }
+
+    const totalDays = Math.floor((now - BIRTH_DATE) / 86400000);
+
+    document.getElementById('elYears').textContent  = years;
+    document.getElementById('elMonths').textContent = months;
+    document.getElementById('elDays').textContent   = days;
+    document.getElementById('elHours').textContent  = String(hours).padStart(2, '0');
+    document.getElementById('elMins').textContent   = String(minutes).padStart(2, '0');
+    document.getElementById('elSecs').textContent   = String(seconds).padStart(2, '0');
+    document.getElementById('elTotalDays').textContent = totalDays.toLocaleString('ru-RU');
+  }
+  updateElapsed();
+  setInterval(updateElapsed, 1000);
+
+  function openElapsed() {
+    updateElapsed();
+    document.getElementById('elapsedModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  /* ================= ПАДАЮЩИЕ СЕРДЕЧКИ ================= */
+  const rain = document.getElementById('heartsRain');
+  const symbols = ['❤️', '💖', '💕', '💗', '🌸'];
+  for (let i = 0; i < 22; i++) {
+    const h = document.createElement('div');
+    h.className = 'heart-rain';
+    h.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    h.style.left = Math.random() * 100 + '%';
+    h.style.fontSize = (14 + Math.random() * 20) + 'px';
+    h.style.animationDuration = (7 + Math.random() * 9) + 's';
+    h.style.animationDelay = (Math.random() * 10) + 's';
+    rain.appendChild(h);
+  }
+
+  /* ================= МИНИ-ИГРА "ЛОВИ СЕРДЕЧКИ" ================= */
+  let score = 0;
+  let clickHeartEl = null;
+
+  function createClickHeart() {
+    if (clickHeartEl) clickHeartEl.remove();
+    const heart = document.createElement('div');
+    heart.className = 'click-heart';
+    heart.textContent = '❤️';
+    const x = 30 + Math.random() * (window.innerWidth - 90);
+    const y = 100 + Math.random() * (window.innerHeight - 220);
+    heart.style.left = x + 'px';
+    heart.style.top = y + 'px';
+    heart.addEventListener('click', onHeartClick);
+    heart.addEventListener('touchstart', (e) => { e.preventDefault(); onHeartClick(e); }, { passive: false });
+    document.body.appendChild(heart);
+    clickHeartEl = heart;
+  }
+
+  function onHeartClick(e) {
+    e.stopPropagation();
+    const el = e.currentTarget || e.target;
+    const rect = el.getBoundingClientRect();
+    const x = rect.left + rect.width / 2;
+    const y = rect.top + rect.height / 2;
+
+    score++;
+    document.getElementById('score').textContent = score;
+
+    const pop = document.createElement('div');
+    pop.className = 'pop-effect';
+    pop.textContent = '+1 ❤️';
+    pop.style.left = x + 'px';
+    pop.style.top = y + 'px';
+    document.body.appendChild(pop);
+    setTimeout(() => pop.remove(), 900);
+
+    for (let i = 0; i < 5; i++) {
+      const mini = document.createElement('div');
+      mini.className = 'mini-heart';
+      mini.textContent = '💗';
+      mini.style.left = x + 'px';
+      mini.style.top = y + 'px';
+      const angle = Math.random() * Math.PI * 2;
+      const dist = 40 + Math.random() * 60;
+      mini.style.setProperty('--tx', Math.cos(angle) * dist + 'px');
+      mini.style.setProperty('--ty', Math.sin(angle) * dist + 'px');
+      document.body.appendChild(mini);
+      setTimeout(() => mini.remove(), 800);
+    }
+
+    checkAchievements();
+    createClickHeart();
+  }
+
+  function checkAchievements() {
+    document.querySelectorAll('.ach').forEach(ach => {
+      if (ach.classList.contains('unlocked')) return;
+      const need = parseInt(ach.dataset.need);
+      if (score >= need) {
+        ach.classList.add('unlocked');
+        const note = document.createElement('div');
+        note.className = 'pop-effect';
+        note.style.cssText = 'left:50%;top:50%;transform:translate(-50%,-50%);font-size:1.5rem;color:#e8c9a0;';
+        note.textContent = '🏆 ' + ach.textContent;
+        document.body.appendChild(note);
+        setTimeout(() => note.remove(), 1800);
+      }
+    });
+  }
+
+  setTimeout(createClickHeart, 2000);
+  setInterval(() => {
+    if (!clickHeartEl) return;
+    const x = 30 + Math.random() * (window.innerWidth - 90);
+    const y = 100 + Math.random() * (window.innerHeight - 220);
+    clickHeartEl.style.transition = 'left 0.8s ease, top 0.8s ease';
+    clickHeartEl.style.left = x + 'px';
+    clickHeartEl.style.top = y + 'px';
+    setTimeout(() => clickHeartEl && (clickHeartEl.style.transition = ''), 900);
+  }, 5000);
+
+  /* ================= МОДАЛКИ ================= */
+  function openLetter() {
+    document.getElementById('letterModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.querySelectorAll('.modal-overlay').forEach(m => {
+    m.addEventListener('click', (e) => {
+      if (e.target === m) closeModal(m.id);
+    });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay').forEach(m => closeModal(m.id));
+      closeSpaceGame();
+    }
+  });
+
+  /* ================= СЕКРЕТ ================= */
+  function isBirthdayUnlocked() { return new Date() >= BIRTHDAY; }
+  function unlockSecret() {
+    const btn = document.getElementById('secretBtn');
+    btn.classList.add('unlocked');
+    btn.innerHTML = '🔓 Секретное';
+    document.getElementById('secretContent').innerHTML = SECRET_TEXT;
+  }
+  function openSecret() {
+    if (!isBirthdayUnlocked()) {
+      const btn = document.getElementById('secretBtn');
+      btn.style.animation = 'shake 0.5s';
+      setTimeout(() => btn.style.animation = '', 500);
+      document.getElementById('secretModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+      return;
+    }
+    unlockSecret();
+    document.getElementById('secretModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  const shakeStyle = document.createElement('style');
+  shakeStyle.textContent = '@keyframes shake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-6px);} 75%{transform:translateX(6px);} }';
+  document.head.appendChild(shakeStyle);
+
+  if (isBirthdayUnlocked()) {
+    unlockSecret();
+    startFireworks();
+  }
+
+  /* ================= МУЗЫКА ================= */
+  const music = document.getElementById('bgMusic');
+  const gameMusic = document.getElementById('gameMusic');
+  const musicBtn = document.getElementById('musicBtn');
+
+  music.src = MAIN_MUSIC_SRC;
+  gameMusic.src = GAME_MUSIC_SRC;
+  music.volume = 0.6;
+  gameMusic.volume = 0.5;
+
+  function toggleMusic() {
+    if (music.paused) {
+      music.play().then(() => {
+        musicBtn.textContent = '🔊';
+        musicBtn.classList.add('playing');
+      }).catch(() => {
+        musicBtn.textContent = '🔇';
+        setTimeout(() => musicBtn.textContent = '🎵', 1500);
+      });
+    } else {
+      music.pause();
+      musicBtn.textContent = '🎵';
+      musicBtn.classList.remove('playing');
+    }
+  }
+
+  function tryAutoplay() {
+    music.play().then(() => {
+      musicBtn.textContent = '🔊';
+      musicBtn.classList.add('playing');
+    }).catch(() => {});
+    document.removeEventListener('click', tryAutoplay);
+    document.removeEventListener('touchstart', tryAutoplay);
+  }
+  document.addEventListener('click', tryAutoplay, { once: true });
+  document.addEventListener('touchstart', tryAutoplay, { once: true });
+
+  /* ================= ПЛЕЙЛИСТ ================= */
+  let plCurrent = -1;
+  let plAudio = new Audio();
+  plAudio.volume = 0.7;
+
+  function renderPlaylist() {
+    const box = document.getElementById('playlistContainer');
+    if (!box) return;
+    box.innerHTML = '';
+    PLAYLIST_TRACKS.forEach((t, i) => {
+      const el = document.createElement('div');
+      el.className = 'pl-track' + (i === plCurrent ? ' active' : '');
+      el.innerHTML = `
+        <div class="pl-num">${i === plCurrent && !plAudio.paused ? '▶' : i + 1}</div>
+        <div class="pl-info">
+          <div class="pl-title">${t.title}</div>
+          <div class="pl-artist">${t.artist}</div>
+        </div>
+        ${i === plCurrent && !plAudio.paused ? '<div class="pl-playing">♪</div>' : ''}
+      `;
+      el.onclick = () => playlistPlay(i);
+      box.appendChild(el);
+    });
+  }
+
+  function playlistPlay(i) {
+    if (plCurrent === i) {
+      playlistToggle();
+      return;
+    }
+    plCurrent = i;
+    plAudio.src = PLAYLIST_TRACKS[i].src;
+    plAudio.play().catch(() => {});
+    renderPlaylist();
+    updatePlBtn();
+  }
+
+  function playlistToggle() {
+    if (plCurrent === -1) {
+      if (PLAYLIST_TRACKS.length > 0) playlistPlay(0);
+      return;
+    }
+    if (plAudio.paused) plAudio.play().catch(() => {});
+    else plAudio.pause();
+    updatePlBtn();
+    renderPlaylist();
+  }
+
+  function playlistNext() {
+    const next = (plCurrent + 1) % PLAYLIST_TRACKS.length;
+    playlistPlay(next);
+  }
+  function playlistPrev() {
+    const prev = (plCurrent - 1 + PLAYLIST_TRACKS.length) % PLAYLIST_TRACKS.length;
+    playlistPlay(prev);
+  }
+
+  function updatePlBtn() {
+    const btn = document.getElementById('plPlay');
+    if (!btn) return;
+    if (plAudio.paused) btn.textContent = '▶';
+    else btn.textContent = '⏸';
+  }
+
+  function formatTime(s) {
+    if (isNaN(s)) return '0:00';
+    const m = Math.floor(s / 60);
+    const sec = Math.floor(s % 60);
+    return m + ':' + String(sec).padStart(2, '0');
+  }
+
+  function playlistSeek(e) {
+    if (!plAudio.duration) return;
+    const bar = document.getElementById('plProgress');
+    const rect = bar.getBoundingClientRect();
+    const pct = (e.clientX - rect.left) / rect.width;
+    plAudio.currentTime = pct * plAudio.duration;
+  }
+
+  plAudio.addEventListener('timeupdate', () => {
+    const fill = document.getElementById('plProgressFill');
+    const cur = document.getElementById('plCurrent');
+    if (plAudio.duration && fill && cur) {
+      fill.style.width = (plAudio.currentTime / plAudio.duration * 100) + '%';
+      cur.textContent = formatTime(plAudio.currentTime);
+    }
+  });
+  plAudio.addEventListener('loadedmetadata', () => {
+    const d = document.getElementById('plDuration');
+    if (d) d.textContent = formatTime(plAudio.duration);
+  });
+  plAudio.addEventListener('ended', () => playlistNext());
+  plAudio.addEventListener('play', () => { updatePlBtn(); renderPlaylist(); });
+  plAudio.addEventListener('pause', () => { updatePlBtn(); renderPlaylist(); });
+
+  function openPlaylist() {
+    renderPlaylist();
+    document.getElementById('playlistModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  /* ================= МУЗЫКА ИГРЫ ================= */
+  let gamePaused = false;
+  let gameMusicOn = true;
+
+  function toggleGameMusic() {
+    const btn = document.getElementById('gameMusicBtn');
+    if (gameMusicOn) {
+      gameMusic.pause();
+      gameMusicOn = false;
+      btn.textContent = '🔇';
+      btn.classList.add('off');
+    } else {
+      gameMusic.play().catch(() => {});
+      gameMusicOn = true;
+      btn.textContent = '🎵';
+      btn.classList.remove('off');
+    }
+  }
+
+  function toggleGamePause() {
+    if (!space.running && !gamePaused) return;
+    gamePaused = !gamePaused;
+    const btn = document.getElementById('gamePauseBtn');
+    if (gamePaused) {
+      btn.textContent = '▶';
+      gameMusic.pause();
+      space.running = false;
+    } else {
+      btn.textContent = '⏸';
+      if (gameMusicOn) gameMusic.play().catch(() => {});
+      space.running = true;
+      requestAnimationFrame(spaceLoop);
+    }
+  }
+
+  /* ================= САЛЮТ ================= */
+  const canvas = document.getElementById('fireworksCanvas');
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let fireworksActive = false;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  function createFirework(x, y) {
+    const colors = ['#e8c9a0', '#fff8f0', '#ff4d88', '#ffb6d5', '#ffd700', '#ff6b9d'];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const count = 40 + Math.floor(Math.random() * 30);
+    for (let i = 0; i < count; i++) {
+      const angle = (Math.PI * 2 * i) / count + Math.random() * 0.2;
+      const speed = 2 + Math.random() * 4;
+      particles.push({
+        x, y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        life: 1,
+        decay: 0.012 + Math.random() * 0.015,
+        color,
+        size: 1.5 + Math.random() * 2
+      });
+    }
+  }
+  function animateFireworks() {
+    if (!fireworksActive) return;
+    ctx.fillStyle = 'rgba(20, 4, 8, 0.18)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx; p.y += p.vy;
+      p.vy += 0.045; p.vx *= 0.99; p.vy *= 0.99;
+      p.life -= p.decay;
+      if (p.life <= 0) { particles.splice(i, 1); continue; }
+      ctx.globalAlpha = p.life;
+      ctx.fillStyle = p.color;
+      ctx.shadowBlur = 15; ctx.shadowColor = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+    requestAnimationFrame(animateFireworks);
+  }
+  function startFireworks() {
+    if (fireworksActive) return;
+    fireworksActive = true;
+    canvas.classList.add('show');
+    ctx.fillStyle = 'rgba(20, 4, 8, 0.18)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    animateFireworks();
+    (function launch() {
+      if (!fireworksActive) return;
+      createFirework(Math.random() * canvas.width, Math.random() * canvas.height * 0.6);
+      setTimeout(launch, 400 + Math.random() * 700);
+    })();
+    for (let i = 0; i < 3; i++) {
+      setTimeout(() => {
+        createFirework(Math.random() * canvas.width, Math.random() * canvas.height * 0.5);
+      }, i * 300);
+    }
+  }
+
+  /* ================= КОСМИЧЕСКАЯ ИГРА ================= */
+  const spaceCanvas = document.getElementById('spaceCanvas');
+  const spaceCtx = spaceCanvas.getContext('2d');
+
+  const space = {
+    running: false,
+    score: 0,
+    rocketX: 0,
+    targetX: 0,
+    items: [],
+    lastSpawn: 0,
+    spawnInterval: 700,
+    shake: 0,
+    flashAlpha: 0,
+    flashColor: '255,255,255',
+    stars: [],
+    w: 0, h: 0,
+    dpr: 1
+  };
+  const SPACE_TARGET = 1000;
+
+  for (let i = 0; i < 90; i++) {
+    space.stars.push({
+      x: Math.random(),
+      y: Math.random(),
+      r: Math.random() * 1.6 + 0.3,
+      a: Math.random() * 0.6 + 0.25
+    });
+  }
+
+  function resizeSpace() {
+    const wrap = spaceCanvas.parentElement;
+    const w = wrap.clientWidth;
+    const h = wrap.clientHeight;
+    if (w === 0 || h === 0) return;
+    const dpr = window.devicePixelRatio || 1;
+    space.w = w; space.h = h; space.dpr = dpr;
+    spaceCanvas.width = w * dpr;
+    spaceCanvas.height = h * dpr;
+    spaceCanvas.style.width = w + 'px';
+    spaceCanvas.style.height = h + 'px';
+    spaceCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (!space.running) drawSpace();
+  }
+
+  window.addEventListener('resize', () => {
+    if (document.getElementById('spaceOverlay').classList.contains('active')) {
+      resizeSpace();
+    }
+  });
+
+  function drawSpace() {
+    const w = space.w, h = space.h;
+    if (!w || !h) return;
+
+    const g = spaceCtx.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, '#0d0005');
+    g.addColorStop(0.5, '#2b0810');
+    g.addColorStop(1, '#150008');
+    spaceCtx.fillStyle = g;
+    spaceCtx.fillRect(0, 0, w, h);
+
+    spaceCtx.save();
+    const neb = spaceCtx.createRadialGradient(w * 0.3, h * 0.3, 0, w * 0.3, h * 0.3, w * 0.5);
+    neb.addColorStop(0, 'rgba(107, 20, 40, 0.35)');
+    neb.addColorStop(1, 'rgba(107, 20, 40, 0)');
+    spaceCtx.fillStyle = neb;
+    spaceCtx.fillRect(0, 0, w, h);
+    const neb2 = spaceCtx.createRadialGradient(w * 0.8, h * 0.7, 0, w * 0.8, h * 0.7, w * 0.4);
+    neb2.addColorStop(0, 'rgba(232, 201, 160, 0.15)');
+    neb2.addColorStop(1, 'rgba(232, 201, 160, 0)');
+    spaceCtx.fillStyle = neb2;
+    spaceCtx.fillRect(0, 0, w, h);
+    spaceCtx.restore();
+
+    for (let i = 0; i < space.stars.length; i++) {
+      const s = space.stars[i];
+      spaceCtx.globalAlpha = s.a;
+      spaceCtx.fillStyle = '#fff8f0';
+      spaceCtx.beginPath();
+      spaceCtx.arc(s.x * w, s.y * h, s.r, 0, Math.PI * 2);
+      spaceCtx.fill();
+    }
+    spaceCtx.globalAlpha = 1;
+
+    spaceCtx.textAlign = 'center';
+    spaceCtx.textBaseline = 'middle';
+    for (let i = 0; i < space.items.length; i++) {
+      const it = space.items[i];
+      spaceCtx.font = it.size + 'px serif';
+      spaceCtx.fillText(it.emoji, it.x, it.y);
+    }
+
+    spaceCtx.save();
+    if (space.shake > 0.5) {
+      spaceCtx.translate((Math.random() - 0.5) * space.shake, (Math.random() - 0.5) * space.shake);
+    }
+    const rx = space.rocketX;
+    const ry = h - 60;
+    const flameG = spaceCtx.createRadialGradient(rx, ry + 25, 0, rx, ry + 25, 22);
+    flameG.addColorStop(0, 'rgba(255, 182, 213, 0.9)');
+    flameG.addColorStop(0.5, 'rgba(255, 77, 136, 0.4)');
+    flameG.addColorStop(1, 'rgba(255, 77, 136, 0)');
+    spaceCtx.fillStyle = flameG;
+    spaceCtx.beginPath();
+    spaceCtx.arc(rx, ry + 25, 22, 0, Math.PI * 2);
+    spaceCtx.fill();
+
+    spaceCtx.font = '44px serif';
+    spaceCtx.fillText('🚀', rx, ry);
+    spaceCtx.restore();
+
+    if (space.flashAlpha > 0.01) {
+      spaceCtx.fillStyle = 'rgba(' + space.flashColor + ',' + space.flashAlpha + ')';
+      spaceCtx.fillRect(0, 0, w, h);
+      space.flashAlpha *= 0.85;
+    }
+  }
+
+  function spawnSpaceItem() {
+    const w = space.w;
+    const isClown = Math.random() < 0.32;
+    const x = 40 + Math.random() * Math.max(1, (w - 80));
+    const baseSpeed = 2 + space.score * 0.0032;
+    const speed = baseSpeed + Math.random() * 1.5;
+    space.items.push({
+      x: x,
+      y: -40,
+      vy: speed,
+      vx: (Math.random() - 0.5) * 0.7,
+      emoji: isClown ? '🤡' : '💗',
+      type: isClown ? 'clown' : 'heart',
+      size: isClown ? 42 : 32
+    });
+  }
+
+  function updateSpaceUI() {
+    document.getElementById('spaceScore').textContent = space.score;
+    const lvl = Math.min(5, Math.floor(space.score / 200) + 1);
+    document.getElementById('spaceLevel').textContent = lvl;
+    const pct = Math.min(100, (space.score / SPACE_TARGET) * 100);
+    document.getElementById('spaceProgressBar').style.width = pct + '%';
+  }
+
+  function spaceLoop(t) {
+    if (!space.running) return;
+
+    if (t - space.lastSpawn > space.spawnInterval) {
+      space.lastSpawn = t;
+      spawnSpaceItem();
+      space.spawnInterval = Math.max(280, 700 - space.score * 0.35);
+    }
+
+    for (let i = space.items.length - 1; i >= 0; i--) {
+      const it = space.items[i];
+      it.y += it.vy;
+      it.x += it.vx;
+      if (it.y > space.h + 50) space.items.splice(i, 1);
+    }
+
+    space.rocketX += (space.targetX - space.rocketX) * 0.22;
+
+    const rocketY = space.h - 60;
+    for (let i = space.items.length - 1; i >= 0; i--) {
+      const it = space.items[i];
+      const dx = it.x - space.rocketX;
+      const dy = it.y - rocketY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 34) {
+        if (it.type === 'heart') {
+          space.score += 10;
+          space.flashColor = '255,182,213';
+          space.flashAlpha = 0.25;
+        } else {
+          space.score = Math.max(0, space.score - 30);
+          space.shake = 16;
+          space.flashColor = '255,60,60';
+          space.flashAlpha = 0.4;
+        }
+        updateSpaceUI();
+        space.items.splice(i, 1);
+        if (space.score >= SPACE_TARGET) {
+          winSpaceGame();
+          return;
+        }
+      }
+    }
+
+    if (space.shake > 0) space.shake *= 0.88;
+
+    drawSpace();
+    requestAnimationFrame(spaceLoop);
+  }
+
+  function startSpaceGame() {
+    space.running = false;
+    space.score = 0;
+    space.items = [];
+    space.lastSpawn = performance.now();
+    space.spawnInterval = 700;
+    space.shake = 0;
+    space.flashAlpha = 0;
+    updateSpaceUI();
+
+    document.getElementById('spaceMessage').classList.remove('active');
+
+    resizeSpace();
+    space.rocketX = space.w / 2;
+    space.targetX = space.w / 2;
+
+    gamePaused = false;
+    document.getElementById('gamePauseBtn').textContent = '⏸';
+    if (gameMusicOn) {
+      gameMusic.currentTime = 0;
+      gameMusic.play().catch(() => {});
+    }
+
+    space.running = true;
+    requestAnimationFrame(spaceLoop);
+  }
+
+  function winSpaceGame() {
+    space.running = false;
+    gameMusic.pause();
+    const msg = document.getElementById('spaceMessage');
+    document.getElementById('spaceMsgContent').innerHTML = `
+      <div class="space-msg-emoji">🏆💗👑</div>
+      <div class="space-msg-title">Ты собрала 1000 сердец!</div>
+      <p class="space-msg-text">
+        Ты — настоящая звёздная принцесса космоса ✨<br>
+        Сердечек хватит на целую галактику!
+      </p>
+      <button class="letter-btn" onclick="startSpaceGame()">🔄 Играть снова</button>
+    `;
+    msg.classList.add('active');
+  }
+
+  function openSpaceGame() {
+    document.getElementById('spaceOverlay').classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    gamePaused = false;
+    document.getElementById('gamePauseBtn').textContent = '⏸';
+    if (gameMusicOn) {
+      gameMusic.currentTime = 0;
+      gameMusic.play().catch(() => {});
+    }
+
+    document.getElementById('spaceMsgContent').innerHTML = `
+      <div class="space-msg-emoji">🚀💗🤡</div>
+      <div class="space-msg-title">Собери 1000 сердец!</div>
+      <p class="space-msg-text">
+        Веди ракету пальцем или мышкой.<br>
+        Лови 💗 (+10) и уворачивайся от клоунов 🤡 (−30)
+      </p>
+      <button class="letter-btn" onclick="startSpaceGame()">▶ Начать полёт</button>
+    `;
+    document.getElementById('spaceMessage').classList.add('active');
+
+    setTimeout(() => {
+      resizeSpace();
+      space.rocketX = space.w / 2;
+      space.targetX = space.w / 2;
+      drawSpace();
+    }, 50);
+  }
+
+  function closeSpaceGame() {
+    space.running = false;
+    gamePaused = false;
+    gameMusic.pause();
+    document.getElementById('spaceOverlay').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  spaceCanvas.addEventListener('pointermove', (e) => {
+    const rect = spaceCanvas.getBoundingClientRect();
+    space.targetX = e.clientX - rect.left;
+  });
+  spaceCanvas.addEventListener('pointerdown', (e) => {
+    const rect = spaceCanvas.getBoundingClientRect();
+    space.targetX = e.clientX - rect.left;
+  });
+
+  let keyLeft = false, keyRight = false;
+  document.addEventListener('keydown', (e) => {
+    if (!space.running) return;
+    if (e.key === 'ArrowLeft') keyLeft = true;
+    if (e.key === 'ArrowRight') keyRight = true;
+  });
+  document.addEventListener('keyup', (e) => {
+    if (e.key === 'ArrowLeft') keyLeft = false;
+    if (e.key === 'ArrowRight') keyRight = false;
+  });
+  setInterval(() => {
+    if (!space.running) return;
+    if (keyLeft) space.targetX = Math.max(30, space.targetX - 25);
+    if (keyRight) space.targetX = Math.min(space.w - 30, space.targetX + 25);
+  }, 30);
+</script>
+</body>
+</html>
