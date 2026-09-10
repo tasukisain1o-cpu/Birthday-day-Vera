@@ -2285,4 +2285,1699 @@
   }
 </script>
 </body>
+ <script>
+/* ============ НАСТРОЙКИ ============ */
+const BIRTHDAY   = new Date(2026, 8, 26, 0, 0, 0);
+const BIRTH_DATE = new Date(2008, 8, 26, 0, 0, 0);
+const MET_DATE   = new Date(2025, 10, 4, 17, 3, 0);
+const CAPSULE_OPEN = new Date(2027, 8, 26, 0, 0, 0);
+const PETROZAVODSK = { lat: 61.79, lon: 34.35 };
+
+const MAIN_MUSIC_SRC = "https://files.catbox.moe/epd5ed.mp3";
+const PLAYLIST_TRACKS = [
+  { title: "Трек 1", artist: "Наш плейлист", src: "https://files.catbox.moe/6nwcj1.mp3" },
+  { title: "Трек 2", artist: "Наш плейлист", src: "https://files.catbox.moe/2dnkfo.mp3" }
+];
+const GAME_MUSIC_SRC = "https://files.catbox.moe/thhkjj.mp3";
+
+const SECRET_TEXT = `
+  <span class="date">26 сентября 2026 — твой день ✨</span>
+  Любимая, если ты это читаешь — значит, наступил твой день рождения 🎂<br><br>
+  Я хочу сказать тебе то, что говорю каждый день, но сегодня — особенно:<br>
+  <span class="highlight">ты — моё самое большое чудо</span>.<br><br>
+  Спасибо, что ты есть. Спасибо за твой смех, за твои глаза, за каждый момент рядом.<br>
+  Пусть этот год принесёт тебе всё, о чём ты мечтаешь — и даже больше 💫<br><br>
+  <span class="highlight">Я тебя очень люблю ❤️</span>
+`;
+
+const SLOW_LETTER_TEXT = `Любимая, если ты читаешь это — значит, наступил тот самый день, ради которого я всё это делал. Я долго думал, что сказать, и понял: слов не хватит, чтобы описать, как сильно ты изменила мою жизнь. Каждый день с тобой — подарок. Спасибо, что ты выбрала меня. Спасибо, что ты рядом. Я люблю тебя больше, чем могу выразить. С днём рождения, моё солнце ❤️`;
+
+const REASONS = [
+  "За твою улыбку, от которой тает всё вокруг","За твои глаза, в которых я тону","За твой смех, который лечит любые раны",
+  "За то, как ты морщишь нос, когда думаешь","За твою заботу, которую я чувствую каждый день","За твою нежность",
+  "За твою честность","За то, что ты рядом, когда мне плохо","За то, что ты радуешься моим успехам",
+  "За то, как ты говоришь моё имя","За твои объятия, в которых я дома","За твои пальцы, сплетённые с моими",
+  "За твоё утреннее сонное лицо","За твои тёплые ладони","За то, как ты пахнешь",
+  "За твоё терпение ко мне","За твоё чувство юмора","За твои шутки, от которых я смеюсь",
+  "За то, что с тобой можно молчать и не скучать","За твоё умение слушать","За твои советы, к которым я прислушиваюсь",
+  "За твою мудрость","За твою силу","За твою уязвимость, которую ты мне доверяешь",
+  "За то, как ты заботишься обо мне","За твою любовь к мелочам","За то, как ты поёшь в душе",
+  "За твою страсть к жизни","За твои мечты, которые ты мне рассказываешь","За твою веру в меня",
+  "За то, что ты всегда находишь нужные слова","За то, что ты умеешь прощать","За то, что с тобой я становлюсь лучше",
+  "За твои тёплые сообщения утром","За твои длинные сообщения вечером","За то, как ты ждёшь меня",
+  "За твоё гостеприимство","За то, как ты готовишь","За твоё «доброе утро»",
+  "За твоё «спокойной ночи»","За твои «люблю»","За твои «скучаю»",
+  "За твой голос в трубке","За то, что ты всегда знаешь, что сказать","За твоё умение удивлять",
+  "За твои сюрпризы","За твою спонтанность","За твою любовь к приключениям",
+  "За твою любовь к уюту","За наши совместные вечера","За наши прогулки",
+  "За наши разговоры до утра","За то, как ты держишь меня за руку","За твои поцелуи",
+  "За твою нежность по утрам","За твою страстность","За то, как ты смотришь на меня",
+  "За твой взгляд, от которого мурашки","За твоё умение поддержать","За твоё умение вдохновить",
+  "За твоё умение успокоить","За то, что ты веришь в нас","За твою преданность",
+  "За твою искренность","За твою открытость","За твоё умение признавать ошибки",
+  "За то, что ты умеешь меняться","За то, что ты рядом в трудные моменты","За твоё «я с тобой»",
+  "За твоё «всё будет хорошо»","За то, как ты заботишься о близких","За твою любовь к животным",
+  "За твою любовь к природе","За твою любовь к жизни","За то, как ты радуешься мелочам",
+  "За твой детский восторг","За твою непосредственность","За то, как ты смущаешься",
+  "За твои румяные щёки","За твою улыбку сквозь слёзы","За то, что ты сильная, но позволяешь себе быть слабой со мной",
+  "За твою чуткость","За твоё внимание к деталям","За то, что ты замечаешь во мне то, что другие не видят",
+  "За то, как ты вдохновляешь меня","За то, что ты моя муза","За то, что ты мой лучший друг",
+  "За то, что ты моя вторая половинка","За то, что ты моё всё","За твои «мелочи», которые на самом деле важны",
+  "За твоё «как ты?» каждый день","За то, что ты помнишь мелочи обо мне","За то, что ты гордишься мной",
+  "За то, что ты — ты","За то, что ты выбрала меня","За то, что я — самый счастливый, потому что ты рядом",
+  "За то, что каждый день с тобой — подарок","За то, что ты — моё чудо ✨"
+];
+
+const IMPORTANT_DATES = [
+  { emoji: "💫", name: "Наше знакомство", date: new Date(2025, 10, 4, 17, 3, 0) },
+  { emoji: "🎂", name: "День рождения любимой", date: new Date(2026, 8, 26, 0, 0, 0) }
+];
+
+const PREDICTIONS = [
+  "Сегодня тебя ждёт что-то очень тёплое 💕","День подходит для мечтаний ✨","Он думает о тебе прямо сейчас 💭",
+  "Улыбнись — сегодня всё получится 🌸","Хороший день, чтобы сказать «люблю» ❤️","Ты сегодня особенно красивая 💫",
+  "Скоро будет повод для радости 🎁","Обними кого-то близкого 🤗","Всё идёт как надо, просто доверься 🌙",
+  "Тебя ждёт приятная неожиданность 🎉","Сегодня — день маленьких чудес ✨","Ты справишься со всем, я знаю 💪",
+  "Хорошее время для нового 🌷","Тебя любят больше, чем ты думаешь ❤️","Сделай что-то приятное себе сегодня 🍫",
+  "Удача рядом, чувствуешь? 🍀","Сегодня можно немного полениться 😴💕","Твоя улыбка способна на многое 💖",
+  "Сегодня лучший день, чтобы просто быть 🌸","Он скучает и очень ждёт встречи 💌","Мир стал лучше, когда ты появилась 🌍✨",
+  "День идеален для объятий 🤗","Ты — чудо. Помни это 💫"
+];
+
+const WARM_WORDS = [
+  "Ты у меня самая лучшая 💕","Я думаю о тебе","Скучаю по тебе ✨",
+  "Ты — моё солнце ☀️","Ты очень красивая","Обнимаю тебя мысленно 🤗",
+  "Я тебя люблю ❤️","Ты — моё чудо","С тобой каждый день особенный",
+  "Ты делаешь меня счастливым","Ты — моя вселенная 🌌","Горжусь тобой",
+  "Ты справишься, я в тебя верю","Просто хотел напомнить — я рядом","Ты особенная 🌸"
+];
+
+const ROMANTIC_IDEAS = [
+  { emoji:'❄️', month:'Январь', idea:'Каток и горячий шоколад' },
+  { emoji:'🌹', month:'Февраль', idea:'Ужин при свечах дома' },
+  { emoji:'🌷', month:'Март', idea:'Прогулка по парку' },
+  { emoji:'🌧️', month:'Апрель', idea:'Кино с пледом' },
+  { emoji:'🌸', month:'Май', idea:'Пикник на природе' },
+  { emoji:'☀️', month:'Июнь', idea:'Закат у воды' },
+  { emoji:'🍓', month:'Июль', idea:'Сбор ягод' },
+  { emoji:'🌻', month:'Август', idea:'Вечер на крыше' },
+  { emoji:'🍂', month:'Сентябрь', idea:'Фотосессия в парке' },
+  { emoji:'🎃', month:'Октябрь', idea:'Тыквенный суп и фильм' },
+  { emoji:'☕', month:'Ноябрь', idea:'Кофейня и разговоры' },
+  { emoji:'🎄', month:'Декабрь', idea:'Ярмарка и ёлка' }
+];
+
+const DREAMS = [
+  { emoji:'🐱', label:'Кот', text:'К хорошим новостям и теплу дома 🐱💕' },
+  { emoji:'🐶', label:'Собака', text:'К верному другу рядом 🐶✨' },
+  { emoji:'🌊', label:'Вода', text:'К переменам и лёгкости 🌊' },
+  { emoji:'🔥', label:'Огонь', text:'К страсти и ярким событиям 🔥' },
+  { emoji:'🌸', label:'Цветы', text:'К романтике и красоте 🌸' },
+  { emoji:'🌈', label:'Радуга', text:'К счастью и исполнению желаний 🌈' },
+  { emoji:'✈️', label:'Самолёт', text:'К путешествию ✈️🌍' },
+  { emoji:'💎', label:'Драгоценность', text:'К подарку или приятной находке 💎' },
+  { emoji:'👶', label:'Ребёнок', text:'К новому и светлому 👶💫' },
+  { emoji:'🍰', label:'Торт', text:'К празднику и сладостям 🍰🎉' },
+  { emoji:'🦋', label:'Бабочка', text:'К переменам в лучшую сторону 🦋' },
+  { emoji:'🌙', label:'Луна', text:'К мечтам и спокойствию 🌙✨' }
+];
+
+/* ============ СЛУЖЕБНОЕ ============ */
+function plural(n, one, few, many) {
+  const m10 = n % 10, m100 = n % 100;
+  if (m10 === 1 && m100 !== 11) return one;
+  if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return few;
+  return many;
+}
+function formatTime(s) {
+  if (isNaN(s)) return '0:00';
+  const m = Math.floor(s / 60), sec = Math.floor(s % 60);
+  return m + ':' + String(sec).padStart(2, '0');
+}
+function dayOfYear(d) {
+  const start = new Date(d.getFullYear(), 0, 0);
+  return Math.floor((d - start) / 86400000);
+}
+
+/* ============ ВКЛАДКИ ============ */
+let currentTab = 'main';
+function switchTab(tab) {
+  if (tab === currentTab) return;
+  const oldEl = document.querySelector('.tab-content[data-tab-content="' + currentTab + '"]');
+  const newEl = document.querySelector('.tab-content[data-tab-content="' + tab + '"]');
+  if (oldEl) oldEl.classList.remove('active');
+  if (newEl) newEl.classList.add('active');
+  document.querySelectorAll('.tg-nav-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector('.tg-nav-btn[data-tab="' + tab + '"]');
+  if (btn) btn.classList.add('active');
+  currentTab = tab;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============ ТАЙМЕР ДО ДР ============ */
+function updateTimer() {
+  const frame = document.getElementById('frame');
+  const now = new Date();
+  const diff = BIRTHDAY - now;
+  const isToday = now.getDate() === 26 && now.getMonth() === 8 && now.getFullYear() === 2026;
+  if (isToday) {
+    frame.classList.add('celebrate');
+    document.getElementById('title').textContent = 'С Днём Рождения! 🎂';
+    document.getElementById('subtitle').textContent = 'Сегодня твой день — самый лучший день в году!';
+    unlockSecret(); startFireworks();
+    return;
+  }
+  if (diff <= 0) {
+    ['days','hours','minutes','seconds'].forEach((id,i)=>document.getElementById(id).textContent = i===0?'0':'00');
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff / 3600000) % 24);
+  const m = Math.floor((diff / 60000) % 60);
+  const s = Math.floor((diff / 1000) % 60);
+  document.getElementById('days').textContent = d;
+  document.getElementById('hours').textContent = String(h).padStart(2,'0');
+  document.getElementById('minutes').textContent = String(m).padStart(2,'0');
+  document.getElementById('seconds').textContent = String(s).padStart(2,'0');
+}
+updateTimer(); setInterval(updateTimer, 1000);
+
+/* ============ СКОЛЬКО ПРОШЛО ============ */
+function updateElapsed() {
+  const now = new Date();
+  if (now < BIRTH_DATE) return;
+  let years = now.getFullYear() - BIRTH_DATE.getFullYear();
+  let months = now.getMonth() - BIRTH_DATE.getMonth();
+  let days = now.getDate() - BIRTH_DATE.getDate();
+  let hours = now.getHours() - BIRTH_DATE.getHours();
+  let minutes = now.getMinutes() - BIRTH_DATE.getMinutes();
+  let seconds = now.getSeconds() - BIRTH_DATE.getSeconds();
+  if (seconds < 0) { seconds += 60; minutes--; }
+  if (minutes < 0) { minutes += 60; hours--; }
+  if (hours < 0) { hours += 24; days--; }
+  if (days < 0) { const pm = new Date(now.getFullYear(), now.getMonth(), 0); days += pm.getDate(); months--; }
+  if (months < 0) { months += 12; years--; }
+  const totalDays = Math.floor((now - BIRTH_DATE) / 86400000);
+  document.getElementById('elYears').textContent = years;
+  document.getElementById('elMonths').textContent = months;
+  document.getElementById('elDays').textContent = days;
+  document.getElementById('elHours').textContent = String(hours).padStart(2,'0');
+  document.getElementById('elMins').textContent = String(minutes).padStart(2,'0');
+  document.getElementById('elSecs').textContent = String(seconds).padStart(2,'0');
+  document.getElementById('elTotalDays').textContent = totalDays.toLocaleString('ru-RU');
+}
+updateElapsed(); setInterval(updateElapsed, 1000);
+function openElapsed() { updateElapsed(); document.getElementById('elapsedModal').classList.add('active'); document.body.style.overflow='hidden'; }
+
+/* ============ МЫ ЗНАКОМЫ ============ */
+function updateSince() {
+  const now = new Date();
+  const diff = now - MET_DATE;
+  if (diff <= 0) return;
+  const totalSec = Math.floor(diff/1000);
+  const totalMin = Math.floor(totalSec/60);
+  const totalH = Math.floor(totalMin/60);
+  document.getElementById('snDays').textContent = Math.floor(totalH/24).toLocaleString('ru-RU');
+  document.getElementById('snHours').textContent = String(totalH%24).padStart(2,'0');
+  document.getElementById('snMins').textContent = String(totalMin%60).padStart(2,'0');
+  document.getElementById('snSecs').textContent = String(totalSec%60).padStart(2,'0');
+  document.getElementById('snTotalH').textContent = totalH.toLocaleString('ru-RU');
+  document.getElementById('snTotalM').textContent = totalMin.toLocaleString('ru-RU');
+}
+updateSince(); setInterval(updateSince, 1000);
+function openSince() { updateSince(); document.getElementById('sinceModal').classList.add('active'); document.body.style.overflow='hidden'; }
+
+/* ============ РУБЕЖ ============ */
+function updateMilestone() {
+  const now = new Date();
+  const days = Math.floor((now - MET_DATE) / 86400000);
+  const milestones = [30, 50, 100, 200, 365, 500, 730, 1000];
+  const next = milestones.find(m => m > days);
+  const titleEl = document.getElementById('milestoneTitle');
+  const daysEl = document.getElementById('milestoneDays');
+  const fillEl = document.getElementById('milestoneFill');
+  if (!next) {
+    titleEl.textContent = 'Целых ' + days + ' дней вместе! 🎉';
+    daysEl.textContent = 'Мы прошли все рубежи и идём дальше ✨';
+    fillEl.style.width = '100%';
+    return;
+  }
+  const prev = milestones[milestones.indexOf(next)-1] || 0;
+  const pct = Math.min(100, ((days - prev) / (next - prev)) * 100);
+  titleEl.textContent = 'До ' + next + ' дней вместе 💕';
+  daysEl.textContent = 'Осталось ' + (next - days) + ' ' + plural(next - days, 'день','дня','дней');
+  fillEl.style.width = pct + '%';
+}
+updateMilestone(); setInterval(updateMilestone, 60000);
+
+/* ============ ПРЕДСКАЗАНИЕ ============ */
+function updatePrediction() {
+  const el = document.getElementById('predictionText');
+  if (!el) return;
+  const idx = dayOfYear(new Date()) % PREDICTIONS.length;
+  el.textContent = PREDICTIONS[idx];
+}
+updatePrediction();
+setInterval(updatePrediction, 60000);
+
+/* ============ СЕКРЕТ ============ */
+function isBirthdayUnlocked() { return new Date() >= BIRTHDAY; }
+function unlockSecret() {
+  const btn = document.getElementById('secretBtn');
+  if (!btn) return;
+  btn.classList.add('unlocked');
+  document.getElementById('secretContent').innerHTML = SECRET_TEXT;
+}
+function openSecret() {
+  if (!isBirthdayUnlocked()) {
+    const btn = document.getElementById('secretBtn');
+    btn.style.animation = 'shake 0.5s';
+    setTimeout(()=>btn.style.animation='', 500);
+  } else unlockSecret();
+  document.getElementById('secretModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+const sh = document.createElement('style');
+sh.textContent = '@keyframes shake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-6px);} 75%{transform:translateX(6px);} }';
+document.head.appendChild(sh);
+
+/* ============ ТЕМА ============ */
+function toggleTheme() {
+  const b = document.body;
+  const btn = document.getElementById('themeBtn');
+  if (b.dataset.theme === 'light') { b.dataset.theme='dark'; btn.textContent='🌙'; localStorage.setItem('theme','dark'); }
+  else { b.dataset.theme='light'; btn.textContent='☀️'; localStorage.setItem('theme','light'); }
+  unlockAchievement('theme');
+}
+const savedTheme = localStorage.getItem('theme') || 'dark';
+if (savedTheme === 'light') { document.body.dataset.theme='light'; document.getElementById('themeBtn').textContent='☀️'; }
+
+/* ============ КОНВЕРТ ============ */
+function openEnvelope() {
+  document.getElementById('envelopeOverlay').classList.add('hidden');
+  localStorage.setItem('envelope_opened','1');
+  music.play().then(()=>{ musicBtn.textContent='🔊'; musicBtn.classList.add('playing'); }).catch(()=>{});
+}
+if (localStorage.getItem('envelope_opened') === '1') document.getElementById('envelopeOverlay').classList.add('hidden');
+
+/* ============ УВЕДОМЛЕНИЕ ДР ============ */
+function checkBirthdayBanner() {
+  const now = new Date();
+  const key = 'bd_shown_' + now.getFullYear();
+  if (now.getDate() === 26 && now.getMonth() === 8 && !localStorage.getItem(key)) {
+    document.getElementById('bdOverlay').classList.add('active');
+    localStorage.setItem(key, '1');
+  }
+}
+function closeBD() {
+  document.getElementById('bdOverlay').classList.remove('active');
+  startFireworks();
+}
+setTimeout(checkBirthdayBanner, 2000);
+
+/* ============ ПАДАЮЩИЕ СЕРДЕЧКИ ============ */
+const rain = document.getElementById('heartsRain');
+const symbols = ['❤️','💖','💕','💗','🌸'];
+for (let i=0;i<22;i++) {
+  const h = document.createElement('div');
+  h.className = 'heart-rain';
+  h.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+  h.style.left = Math.random()*100 + '%';
+  h.style.fontSize = (14 + Math.random()*20) + 'px';
+  h.style.animationDuration = (7 + Math.random()*9) + 's';
+  h.style.animationDelay = (Math.random()*10) + 's';
+  rain.appendChild(h);
+}
+
+/* ============ СЕРДЦЕ ИЗ ЧАСТИЦ ============ */
+const hCv = document.getElementById('heartCanvas');
+const hCtx = hCv.getContext('2d');
+let hParts = [], mX = -1000, mY = -1000;
+function heartFormula(t) {
+  return { x: 16*Math.pow(Math.sin(t),3), y: 13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t) };
+}
+function buildHeart() {
+  hParts = [];
+  for (let i=0;i<120;i++) {
+    const t = (Math.PI*2*i)/120;
+    const p = heartFormula(t);
+    hParts.push({ bx:p.x, by:p.y, a:t, s:1.5+Math.random()*1.5 });
+  }
+}
+buildHeart();
+function resizeHeart() { hCv.width = window.innerWidth; hCv.height = window.innerHeight; }
+resizeHeart();
+window.addEventListener('resize', resizeHeart);
+window.addEventListener('pointermove', e => { mX = e.clientX; mY = e.clientY; });
+let hTime = 0;
+function drawHeart() {
+  if (!hCv.width) return;
+  hCtx.clearRect(0,0,hCv.width,hCv.height);
+  const cx = hCv.width/2, cy = hCv.height/2;
+  const sc = Math.min(hCv.width, hCv.height)/45;
+  hTime += 0.02;
+  const pulse = 1 + Math.sin(hTime)*0.04;
+  const light = document.body.dataset.theme === 'light';
+  const color = light ? '155,37,68' : '232,201,160';
+  hParts.forEach(p => {
+    let x = p.bx*sc*pulse + cx;
+    let y = -p.by*sc*pulse + cy;
+    const dx = x-mX, dy = y-mY;
+    const dist = Math.sqrt(dx*dx+dy*dy);
+    if (dist < 100) { const f = (100-dist)/100; x += (dx/dist)*f*25; y += (dy/dist)*f*25; }
+    const a = 0.35 + Math.sin(hTime*2 + p.a)*0.2;
+    hCtx.fillStyle = 'rgba('+color+','+a+')';
+    hCtx.beginPath(); hCtx.arc(x,y,p.s,0,Math.PI*2); hCtx.fill();
+  });
+  requestAnimationFrame(drawHeart);
+}
+drawHeart();
+
+/* ============ ИГРА ЛОВИ СЕРДЕЧКИ ============ */
+let score = parseInt(localStorage.getItem('score_hearts')||'0');
+let clickHeartEl = null;
+document.getElementById('score').textContent = score;
+setTimeout(checkHeartAchievements, 100);
+
+function createClickHeart() {
+  if (clickHeartEl) clickHeartEl.remove();
+  const h = document.createElement('div');
+  h.className = 'click-heart';
+  h.textContent = '❤️';
+  h.style.left = (30 + Math.random()*(window.innerWidth-90)) + 'px';
+  h.style.top = (100 + Math.random()*(window.innerHeight-220)) + 'px';
+  h.addEventListener('click', onHeartClick);
+  h.addEventListener('touchstart', e => { e.preventDefault(); onHeartClick(e); }, { passive: false });
+  document.body.appendChild(h);
+  clickHeartEl = h;
+}
+function onHeartClick(e) {
+  e.stopPropagation();
+  const el = e.currentTarget || e.target;
+  const r = el.getBoundingClientRect();
+  const x = r.left + r.width/2, y = r.top + r.height/2;
+  score++;
+  document.getElementById('score').textContent = score;
+  localStorage.setItem('score_hearts', score);
+  const pop = document.createElement('div');
+  pop.className = 'pop-effect'; pop.textContent = '+1 ❤️';
+  pop.style.left = x+'px'; pop.style.top = y+'px';
+  document.body.appendChild(pop); setTimeout(()=>pop.remove(),900);
+  for (let i=0;i<5;i++) {
+    const m = document.createElement('div');
+    m.className='mini-heart'; m.textContent='💗';
+    m.style.left=x+'px'; m.style.top=y+'px';
+    const ang = Math.random()*Math.PI*2, d = 40+Math.random()*60;
+    m.style.setProperty('--tx', Math.cos(ang)*d+'px');
+    m.style.setProperty('--ty', Math.sin(ang)*d+'px');
+    document.body.appendChild(m); setTimeout(()=>m.remove(),800);
+  }
+  checkHeartAchievements();
+  if (score >= 10) unlockAchievement('hearts_game');
+  if (score >= 50) unlockAchievement('hearts50');
+  createClickHeart();
+}
+function checkHeartAchievements() {
+  document.querySelectorAll('.ach').forEach(a => {
+    if (a.classList.contains('unlocked')) return;
+    const n = parseInt(a.dataset.need);
+    if (score >= n) {
+      a.classList.add('unlocked');
+      const note = document.createElement('div');
+      note.className = 'pop-effect';
+      note.style.cssText='left:50%;top:50%;transform:translate(-50%,-50%);font-size:1.5rem;color:#e8c9a0;';
+      note.textContent = '🏆 '+a.textContent;
+      document.body.appendChild(note); setTimeout(()=>note.remove(),1800);
+    }
+  });
+}
+setTimeout(createClickHeart, 2000);
+setInterval(() => {
+  if (!clickHeartEl) return;
+  clickHeartEl.style.transition = 'left 0.8s ease, top 0.8s ease';
+  clickHeartEl.style.left = (30 + Math.random()*(window.innerWidth-90))+'px';
+  clickHeartEl.style.top = (100 + Math.random()*(window.innerHeight-220))+'px';
+  setTimeout(()=>clickHeartEl && (clickHeartEl.style.transition=''),900);
+}, 5000);
+
+/* ============ МУЗЫКА ============ */
+const music = document.getElementById('bgMusic');
+const gameMusic = document.getElementById('gameMusic');
+const musicBtn = document.getElementById('musicBtn');
+music.src = MAIN_MUSIC_SRC; gameMusic.src = GAME_MUSIC_SRC;
+music.volume = 0.6; gameMusic.volume = 0.5;
+function stopMainMusic() { if (music && !music.paused) { music.pause(); musicBtn.textContent='🎵'; musicBtn.classList.remove('playing'); } }
+function toggleMusic() {
+  if (music.paused) {
+    if (typeof plAudio !== 'undefined' && plAudio && !plAudio.paused) { plAudio.pause(); updatePlBtn(); renderPlaylist(); }
+    if (gameMusic && !gameMusic.paused) gameMusic.pause();
+    music.play().then(()=>{ musicBtn.textContent='🔊'; musicBtn.classList.add('playing'); }).catch(()=>{});
+  } else { music.pause(); musicBtn.textContent='🎵'; musicBtn.classList.remove('playing'); }
+}
+function tryAutoplay() { music.play().then(()=>{ musicBtn.textContent='🔊'; musicBtn.classList.add('playing'); }).catch(()=>{}); document.removeEventListener('click',tryAutoplay); document.removeEventListener('touchstart',tryAutoplay); }
+document.addEventListener('click', tryAutoplay, { once: true });
+document.addEventListener('touchstart', tryAutoplay, { once: true });
+
+/* ============ ПЛЕЙЛИСТ ============ */
+let plCurrent = -1;
+let plAudio = new Audio(); plAudio.volume = 0.7;
+let plScrubbing = false;
+function renderPlaylist() {
+  const box = document.getElementById('playlistContainer');
+  if (!box) return;
+  box.innerHTML = '';
+  PLAYLIST_TRACKS.forEach((t,i) => {
+    const el = document.createElement('div');
+    el.className = 'pl-track' + (i===plCurrent?' active':'');
+    el.innerHTML = '<div class="pl-num">'+(i===plCurrent && !plAudio.paused?'▶':i+1)+'</div><div class="pl-info"><div class="pl-title">'+t.title+'</div><div class="pl-artist">'+t.artist+'</div></div>'+(i===plCurrent && !plAudio.paused?'<div class="pl-playing">♪</div>':'');
+    el.onclick = () => playlistPlay(i);
+    box.appendChild(el);
+  });
+}
+function playlistPlay(i) {
+  if (plCurrent === i) { playlistToggle(); return; }
+  stopMainMusic();
+  if (gameMusic && !gameMusic.paused) gameMusic.pause();
+  plCurrent = i; plAudio.src = PLAYLIST_TRACKS[i].src;
+  plAudio.play().catch(()=>{});
+  renderPlaylist(); updatePlBtn();
+}
+function playlistToggle() {
+  if (plCurrent === -1) { if (PLAYLIST_TRACKS.length) playlistPlay(0); return; }
+  if (plAudio.paused) { stopMainMusic(); if (gameMusic && !gameMusic.paused) gameMusic.pause(); plAudio.play().catch(()=>{}); }
+  else plAudio.pause();
+  updatePlBtn(); renderPlaylist();
+}
+function playlistNext() { playlistPlay((plCurrent+1)%PLAYLIST_TRACKS.length); }
+function playlistPrev() { playlistPlay((plCurrent-1+PLAYLIST_TRACKS.length)%PLAYLIST_TRACKS.length); }
+function updatePlBtn() { const b = document.getElementById('plPlay'); if (b) b.textContent = plAudio.paused?'▶':'⏸'; }
+function playlistSeekPct(pct) {
+  if (!plAudio.duration) return;
+  pct = Math.max(0, Math.min(1, pct));
+  plAudio.currentTime = pct * plAudio.duration;
+  const fill = document.getElementById('plProgressFill');
+  const cur = document.getElementById('plCurrent');
+  if (fill) fill.style.width = (pct*100)+'%';
+  if (cur) cur.textContent = formatTime(pct*plAudio.duration);
+}
+function playlistSeekFromEvent(e) {
+  const bar = document.getElementById('plProgress');
+  if (!bar) return;
+  const r = bar.getBoundingClientRect();
+  let cx = e.clientX;
+  if (e.touches && e.touches[0]) cx = e.touches[0].clientX;
+  else if (e.changedTouches && e.changedTouches[0]) cx = e.changedTouches[0].clientX;
+  playlistSeekPct((cx - r.left)/r.width);
+}
+plAudio.addEventListener('timeupdate', () => {
+  if (plScrubbing) return;
+  const fill = document.getElementById('plProgressFill');
+  const cur = document.getElementById('plCurrent');
+  if (plAudio.duration && fill && cur) {
+    fill.style.width = (plAudio.currentTime/plAudio.duration*100)+'%';
+    cur.textContent = formatTime(plAudio.currentTime);
+  }
+});
+plAudio.addEventListener('loadedmetadata', () => {
+  const d = document.getElementById('plDuration');
+  if (d) d.textContent = formatTime(plAudio.duration);
+});
+plAudio.addEventListener('ended', playlistNext);
+plAudio.addEventListener('play', () => { updatePlBtn(); renderPlaylist(); });
+plAudio.addEventListener('pause', () => { updatePlBtn(); renderPlaylist(); });
+document.addEventListener('DOMContentLoaded', () => {
+  const bar = document.getElementById('plProgress');
+  if (!bar) return;
+  bar.addEventListener('pointerdown', e => {
+    plScrubbing = true;
+    try { bar.setPointerCapture(e.pointerId); } catch(_){}
+    playlistSeekFromEvent(e);
+  });
+  bar.addEventListener('pointermove', e => { if (plScrubbing) playlistSeekFromEvent(e); });
+  bar.addEventListener('pointerup', () => plScrubbing = false);
+  bar.addEventListener('pointercancel', () => plScrubbing = false);
+  bar.addEventListener('pointerleave', () => plScrubbing = false);
+});
+
+/* ============ МУЗЫКА ИГРЫ ============ */
+let gamePaused = false, gameMusicOn = true;
+function toggleGameMusic() {
+  const btn = document.getElementById('gameMusicBtn');
+  if (gameMusicOn) { gameMusic.pause(); gameMusicOn = false; btn.textContent='🔇'; btn.classList.add('off'); }
+  else { stopMainMusic(); if (plAudio && !plAudio.paused) { plAudio.pause(); updatePlBtn(); renderPlaylist(); } gameMusic.play().catch(()=>{}); gameMusicOn = true; btn.textContent='🎵'; btn.classList.remove('off'); }
+}
+function toggleGamePause() {
+  if (!space.running && !gamePaused) return;
+  gamePaused = !gamePaused;
+  const btn = document.getElementById('gamePauseBtn');
+  if (gamePaused) { btn.textContent='▶'; gameMusic.pause(); space.running = false; }
+  else { btn.textContent='⏸'; if (gameMusicOn) gameMusic.play().catch(()=>{}); space.running = true; requestAnimationFrame(spaceLoop); }
+}
+
+/* ============ САЛЮТ ============ */
+const fwCv = document.getElementById('fireworksCanvas');
+const fwCtx = fwCv.getContext('2d');
+let fwP = [], fwActive = false;
+function resizeFW() { fwCv.width = window.innerWidth; fwCv.height = window.innerHeight; }
+resizeFW(); window.addEventListener('resize', resizeFW);
+function createFW(x,y) {
+  const colors = ['#e8c9a0','#fff8f0','#ff4d88','#ffb6d5','#ffd700','#ff6b9d'];
+  const col = colors[Math.floor(Math.random()*colors.length)];
+  const n = 40 + Math.floor(Math.random()*30);
+  for (let i=0;i<n;i++) {
+    const a = (Math.PI*2*i)/n + Math.random()*0.2;
+    const s = 2 + Math.random()*4;
+    fwP.push({ x, y, vx:Math.cos(a)*s, vy:Math.sin(a)*s, life:1, decay:0.012+Math.random()*0.015, col, size:1.5+Math.random()*2 });
+  }
+}
+function animateFW() {
+  if (!fwActive) return;
+  fwCtx.fillStyle = 'rgba(20,4,8,0.18)';
+  fwCtx.fillRect(0,0,fwCv.width,fwCv.height);
+  for (let i=fwP.length-1;i>=0;i--) {
+    const p = fwP[i];
+    p.x += p.vx; p.y += p.vy;
+    p.vy += 0.045; p.vx *= 0.99; p.vy *= 0.99;
+    p.life -= p.decay;
+    if (p.life <= 0) { fwP.splice(i,1); continue; }
+    fwCtx.globalAlpha = p.life;
+    fwCtx.fillStyle = p.col;
+    fwCtx.shadowBlur = 15; fwCtx.shadowColor = p.col;
+    fwCtx.beginPath(); fwCtx.arc(p.x,p.y,p.size*p.life,0,Math.PI*2); fwCtx.fill();
+  }
+  fwCtx.globalAlpha = 1; fwCtx.shadowBlur = 0;
+  requestAnimationFrame(animateFW);
+}
+function startFireworks() {
+  if (fwActive) return;
+  fwActive = true;
+  fwCv.classList.add('show');
+  fwCtx.fillStyle = 'rgba(20,4,8,0.18)';
+  fwCtx.fillRect(0,0,fwCv.width,fwCv.height);
+  animateFW();
+  (function launch() {
+    if (!fwActive) return;
+    createFW(Math.random()*fwCv.width, Math.random()*fwCv.height*0.6);
+    setTimeout(launch, 400+Math.random()*700);
+  })();
+}
+if (isBirthdayUnlocked()) { unlockSecret(); startFireworks(); }
+
+/* ============ КОСМОС ============ */
+const sCv = document.getElementById('spaceCanvas');
+const sCtx = sCv.getContext('2d');
+const space = { running:false, score:parseInt(localStorage.getItem('score_space')||'0'), rocketX:0, targetX:0, items:[], lastSpawn:0, spawnInterval:700, shake:0, flashAlpha:0, flashColor:'255,255,255', stars:[], w:0, h:0, dpr:1 };
+const SPACE_TARGET = 1000;
+for (let i=0;i<90;i++) space.stars.push({ x:Math.random(), y:Math.random(), r:Math.random()*1.6+0.3, a:Math.random()*0.6+0.25 });
+function resizeSpace() {
+  const wrap = sCv.parentElement;
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  if (!w || !h) return;
+  const dpr = window.devicePixelRatio || 1;
+  space.w = w; space.h = h; space.dpr = dpr;
+  sCv.width = w*dpr; sCv.height = h*dpr;
+  sCv.style.width = w+'px'; sCv.style.height = h+'px';
+  sCtx.setTransform(dpr,0,0,dpr,0,0);
+  if (!space.running) drawSpace();
+}
+window.addEventListener('resize', () => { if (document.getElementById('spaceOverlay').classList.contains('active')) resizeSpace(); });
+function drawSpace() {
+  const w = space.w, h = space.h;
+  if (!w || !h) return;
+  const g = sCtx.createLinearGradient(0,0,0,h);
+  g.addColorStop(0,'#0d0005'); g.addColorStop(0.5,'#2b0810'); g.addColorStop(1,'#150008');
+  sCtx.fillStyle = g; sCtx.fillRect(0,0,w,h);
+  sCtx.save();
+  const neb = sCtx.createRadialGradient(w*0.3,h*0.3,0,w*0.3,h*0.3,w*0.5);
+  neb.addColorStop(0,'rgba(107,20,40,0.35)'); neb.addColorStop(1,'rgba(107,20,40,0)');
+  sCtx.fillStyle = neb; sCtx.fillRect(0,0,w,h);
+  sCtx.restore();
+  for (const s of space.stars) {
+    sCtx.globalAlpha = s.a; sCtx.fillStyle = '#fff8f0';
+    sCtx.beginPath(); sCtx.arc(s.x*w, s.y*h, s.r, 0, Math.PI*2); sCtx.fill();
+  }
+  sCtx.globalAlpha = 1;
+  sCtx.textAlign = 'center'; sCtx.textBaseline = 'middle';
+  for (const it of space.items) {
+    sCtx.font = it.size + 'px serif';
+    sCtx.fillText(it.emoji, it.x, it.y);
+  }
+  sCtx.save();
+  if (space.shake > 0.5) sCtx.translate((Math.random()-0.5)*space.shake, (Math.random()-0.5)*space.shake);
+  const rx = space.rocketX, ry = h-60;
+  const fG = sCtx.createRadialGradient(rx, ry+25, 0, rx, ry+25, 22);
+  fG.addColorStop(0,'rgba(255,182,213,0.9)');
+  fG.addColorStop(0.5,'rgba(255,77,136,0.4)');
+  fG.addColorStop(1,'rgba(255,77,136,0)');
+  sCtx.fillStyle = fG;
+  sCtx.beginPath(); sCtx.arc(rx, ry+25, 22, 0, Math.PI*2); sCtx.fill();
+  sCtx.font = '44px serif';
+  sCtx.fillText('🚀', rx, ry);
+  sCtx.restore();
+  if (space.flashAlpha > 0.01) {
+    sCtx.fillStyle = 'rgba('+space.flashColor+','+space.flashAlpha+')';
+    sCtx.fillRect(0,0,w,h);
+    space.flashAlpha *= 0.85;
+  }
+}
+function spawnSpaceItem() {
+  const w = space.w;
+  const isClown = Math.random() < 0.32;
+  const x = 40 + Math.random()*Math.max(1,(w-80));
+  const sp = 2 + space.score*0.0032 + Math.random()*1.5;
+  space.items.push({ x, y:-40, vy:sp, vx:(Math.random()-0.5)*0.7, emoji:isClown?'🤡':'💗', type:isClown?'clown':'heart', size:isClown?42:32 });
+}
+function updateSpaceUI() {
+  document.getElementById('spaceScore').textContent = space.score;
+  document.getElementById('spaceLevel').textContent = Math.min(5, Math.floor(space.score/200)+1);
+  document.getElementById('spaceProgressBar').style.width = Math.min(100,(space.score/SPACE_TARGET)*100)+'%';
+}
+function spaceLoop(t) {
+  if (!space.running) return;
+  if (t - space.lastSpawn > space.spawnInterval) {
+    space.lastSpawn = t; spawnSpaceItem();
+    space.spawnInterval = Math.max(280, 700 - space.score*0.35);
+  }
+  for (let i=space.items.length-1;i>=0;i--) {
+    const it = space.items[i];
+    it.y += it.vy; it.x += it.vx;
+    if (it.y > space.h+50) space.items.splice(i,1);
+  }
+  space.rocketX += (space.targetX - space.rocketX)*0.22;
+  const rY = space.h-60;
+  for (let i=space.items.length-1;i>=0;i--) {
+    const it = space.items[i];
+    const dx = it.x - space.rocketX, dy = it.y - rY;
+    if (Math.sqrt(dx*dx+dy*dy) < 34) {
+      if (it.type === 'heart') { space.score += 10; space.flashColor='255,182,213'; space.flashAlpha=0.25; }
+      else { space.score = Math.max(0, space.score-30); space.shake=16; space.flashColor='255,60,60'; space.flashAlpha=0.4; }
+      localStorage.setItem('score_space', space.score);
+      updateSpaceUI();
+      space.items.splice(i,1);
+      if (space.score >= SPACE_TARGET) { winSpaceGame(); return; }
+    }
+  }
+  if (space.shake > 0) space.shake *= 0.88;
+  drawSpace();
+  requestAnimationFrame(spaceLoop);
+}
+function startSpaceGame() {
+  space.running = false;
+  if (space.score >= SPACE_TARGET) space.score = 0;
+  space.items = []; space.lastSpawn = performance.now(); space.spawnInterval = 700;
+  space.shake = 0; space.flashAlpha = 0;
+  updateSpaceUI();
+  document.getElementById('spaceMessage').classList.remove('active');
+  resizeSpace();
+  space.rocketX = space.w/2; space.targetX = space.w/2;
+  stopMainMusic();
+  if (plAudio && !plAudio.paused) { plAudio.pause(); updatePlBtn(); renderPlaylist(); }
+  gamePaused = false;
+  document.getElementById('gamePauseBtn').textContent='⏸';
+  if (gameMusicOn) { gameMusic.currentTime=0; gameMusic.play().catch(()=>{}); }
+  space.running = true; unlockAchievement('space_game');
+  requestAnimationFrame(spaceLoop);
+}
+function winSpaceGame() {
+  space.running = false; gameMusic.pause();
+  unlockAchievement('space100');
+  const m = document.getElementById('spaceMessage');
+  document.getElementById('spaceMsgContent').innerHTML = '<div style="font-size:3rem;margin-bottom:15px;">🏆💗👑</div><div class="game-msg-title">Ты собрала 1000 сердец!</div><p class="game-msg-text">Ты — настоящая звёздная принцесса космоса ✨</p><button class="letter-btn" onclick="startSpaceGame()">🔄 Играть снова</button>';
+  m.classList.add('active');
+}
+function openSpaceGame() {
+  document.getElementById('spaceOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  stopMainMusic();
+  if (plAudio && !plAudio.paused) { plAudio.pause(); updatePlBtn(); renderPlaylist(); }
+  gamePaused = false;
+  document.getElementById('gamePauseBtn').textContent='⏸';
+  if (gameMusicOn) { gameMusic.currentTime=0; gameMusic.play().catch(()=>{}); }
+  document.getElementById('spaceMsgContent').innerHTML = '<div style="font-size:3rem;margin-bottom:15px;">🚀💗🤡</div><div class="game-msg-title">Собери 1000 сердец!</div><p class="game-msg-text">Веди ракету пальцем. Лови 💗 (+10), избегай 🤡 (−30)</p><button class="letter-btn" onclick="startSpaceGame()">▶ '+(space.score>0?'Продолжить':'Начать полёт')+'</button>';
+  document.getElementById('spaceMessage').classList.add('active');
+  setTimeout(()=>{ resizeSpace(); space.rocketX = space.w/2; space.targetX = space.w/2; drawSpace(); }, 50);
+}
+function closeSpaceGame() {
+  space.running = false; gamePaused = false; gameMusic.pause();
+  document.getElementById('spaceOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+sCv.addEventListener('pointermove', e => { const r = sCv.getBoundingClientRect(); space.targetX = e.clientX - r.left; });
+sCv.addEventListener('pointerdown', e => { const r = sCv.getBoundingClientRect(); space.targetX = e.clientX - r.left; });
+let kL = false, kR = false;
+document.addEventListener('keydown', e => { if (!space.running) return; if (e.key==='ArrowLeft') kL=true; if (e.key==='ArrowRight') kR=true; });
+document.addEventListener('keyup', e => { if (e.key==='ArrowLeft') kL=false; if (e.key==='ArrowRight') kR=false; });
+setInterval(()=>{ if (!space.running) return; if (kL) space.targetX = Math.max(30, space.targetX-25); if (kR) space.targetX = Math.min(space.w-30, space.targetX+25); }, 30);
+updateSpaceUI();
+
+/* ============ ЛОВЕЦ ПОЦЕЛУЕВ ============ */
+const kCv = document.getElementById('kissCanvas');
+const kCtx = kCv.getContext('2d');
+const kiss = { running:false, score:0, combo:1, timeLeft:60, items:[], lastSpawn:0, spawnInterval:500, w:0, h:0, dpr:1, popups:[] };
+function resizeKiss() {
+  const wrap = kCv.parentElement;
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  if (!w || !h) return;
+  const dpr = window.devicePixelRatio || 1;
+  kiss.w = w; kiss.h = h; kiss.dpr = dpr;
+  kCv.width = w*dpr; kCv.height = h*dpr;
+  kCv.style.width = w+'px'; kCv.style.height = h+'px';
+  kCtx.setTransform(dpr,0,0,dpr,0,0);
+}
+function kissDraw() {
+  const w = kiss.w, h = kiss.h;
+  if (!w || !h) return;
+  const g = kCtx.createLinearGradient(0,0,0,h);
+  g.addColorStop(0,'#1a1030'); g.addColorStop(0.5,'#2d1b4e'); g.addColorStop(1,'#4a2a6b');
+  kCtx.fillStyle = g; kCtx.fillRect(0,0,w,h);
+  for (let i=0;i<30;i++) {
+    const sx = (i*137.5)%w, sy = (i*73.3)%h;
+    const a = 0.3 + Math.sin(Date.now()/500 + i)*0.3;
+    kCtx.globalAlpha = a; kCtx.fillStyle = '#fff8f0';
+    kCtx.beginPath(); kCtx.arc(sx,sy,1+(i%3)*0.5,0,Math.PI*2); kCtx.fill();
+  }
+  kCtx.globalAlpha = 1;
+  kCtx.textAlign = 'center'; kCtx.textBaseline = 'middle';
+  for (const it of kiss.items) {
+    kCtx.font = it.size+'px serif';
+    kCtx.save(); kCtx.translate(it.x,it.y); kCtx.rotate(it.rot);
+    kCtx.shadowBlur = 20; kCtx.shadowColor = 'rgba(255,182,213,0.8)';
+    kCtx.fillText('💋',0,0); kCtx.restore();
+  }
+  for (let i=kiss.popups.length-1;i>=0;i--) {
+    const p = kiss.popups[i];
+    p.y -= 1.5; p.life -= 0.02;
+    if (p.life <= 0) { kiss.popups.splice(i,1); continue; }
+    kCtx.globalAlpha = p.life; kCtx.fillStyle = '#ffb6d5';
+    kCtx.font = 'bold 22px Courier New';
+    kCtx.fillText(p.text, p.x, p.y);
+  }
+  kCtx.globalAlpha = 1;
+}
+function kissLoop(t) {
+  if (!kiss.running) return;
+  if (t - kiss.lastSpawn > kiss.spawnInterval) {
+    kiss.lastSpawn = t;
+    kiss.items.push({
+      x:40+Math.random()*(kiss.w-80), y:kiss.h+40,
+      vy:-(1.5+Math.random()*1.5+kiss.score*0.008),
+      vx:(Math.random()-0.5)*1.2,
+      rot:(Math.random()-0.5)*0.6, rotSpeed:(Math.random()-0.5)*0.03,
+      size:30+Math.random()*25
+    });
+  }
+  for (let i=kiss.items.length-1;i>=0;i--) {
+    const it = kiss.items[i];
+    it.x += it.vx; it.y += it.vy; it.rot += it.rotSpeed;
+    if (it.y < -50 || it.x < -50 || it.x > kiss.w+50) {
+      kiss.items.splice(i,1);
+      if (kiss.combo > 1) { kiss.combo = 1; document.getElementById('kissCombo').textContent = 'x1'; }
+    }
+  }
+  kissDraw(); requestAnimationFrame(kissLoop);
+}
+function kissTick() {
+  if (!kiss.running) return;
+  kiss.timeLeft--;
+  document.getElementById('kissTime').textContent = kiss.timeLeft;
+  document.getElementById('kissTimerFill').style.width = (kiss.timeLeft/60*100)+'%';
+  if (kiss.timeLeft <= 0) { endKissGame(); return; }
+  setTimeout(kissTick, 1000);
+}
+kCv.addEventListener('pointerdown', e => {
+  if (!kiss.running) return;
+  const r = kCv.getBoundingClientRect();
+  const px = e.clientX - r.left, py = e.clientY - r.top;
+  for (let i=kiss.items.length-1;i>=0;i--) {
+    const it = kiss.items[i];
+    const dx = it.x-px, dy = it.y-py;
+    if (Math.sqrt(dx*dx+dy*dy) < it.size*0.9) {
+      const earned = kiss.combo;
+      kiss.score += earned;
+      kiss.combo = Math.min(5, kiss.combo+1);
+      kiss.popups.push({ x:it.x, y:it.y, text:'+'+earned, life:1 });
+      kiss.items.splice(i,1);
+      document.getElementById('kissScore').textContent = kiss.score;
+      document.getElementById('kissCombo').textContent = 'x'+kiss.combo;
+      break;
+    }
+  }
+});
+function startKissGame() {
+  kiss.running = false; kiss.score = 0; kiss.combo = 1; kiss.timeLeft = 60;
+  kiss.items = []; kiss.popups = []; kiss.spawnInterval = 500;
+  document.getElementById('kissScore').textContent = '0';
+  document.getElementById('kissCombo').textContent = 'x1';
+  document.getElementById('kissTime').textContent = '60';
+  document.getElementById('kissTimerFill').style.width = '100%';
+  document.getElementById('kissMessage').classList.remove('active');
+  resizeKiss();
+  kiss.running = true; kiss.lastSpawn = performance.now();
+  requestAnimationFrame(kissLoop); kissTick();
+  unlockAchievement('kiss_game');
+}
+function endKissGame() {
+  kiss.running = false;
+  let title, rank;
+  if (kiss.score >= 300) { title='💖 Мастер поцелуев!'; rank='Невероятно!'; }
+  else if (kiss.score >= 150) { title='💋 Профи!'; rank='Ты ловко управляешься!'; }
+  else if (kiss.score >= 80) { title='✨ Отлично!'; rank='Почти мастерство!'; }
+  else { title='🌸 Хорошее начало!'; rank='Попробуй ещё!'; }
+  document.getElementById('kissMsgContent').innerHTML = '<div style="font-size:3rem;margin-bottom:15px;">'+(kiss.score>=150?'🏆':'💋')+'</div><div class="game-msg-title" style="color:#ffb6d5;">'+title+'</div><p class="game-msg-text">Поймано: <b style="color:#ffb6d5;font-size:1.4rem;">'+kiss.score+'</b><br>'+rank+'</p><button class="letter-btn" onclick="startKissGame()">🔄 Играть снова</button>';
+  document.getElementById('kissMessage').classList.add('active');
+  if (kiss.score >= 50) unlockAchievement('kiss50');
+}
+function openKissGame() {
+  document.getElementById('kissOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  setTimeout(()=>{ resizeKiss(); kissDraw(); }, 50);
+  unlockAchievement('kiss_game');
+}
+function closeKissGame() {
+  kiss.running = false;
+  document.getElementById('kissOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+window.addEventListener('resize', () => { if (document.getElementById('kissOverlay').classList.contains('active')) resizeKiss(); });
+
+/* ============ ПАЗЛ ============ */
+let puzzleState = [], puzzleSelected = -1;
+function openPuzzle() {
+  document.getElementById('puzzleModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  shufflePuzzle();
+  unlockAchievement('puzzle_open');
+}
+function shufflePuzzle() {
+  puzzleState = [0,1,2,3,4,5,6,7,8];
+  for (let i=puzzleState.length-1;i>0;i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [puzzleState[i], puzzleState[j]] = [puzzleState[j], puzzleState[i]];
+  }
+  puzzleSelected = -1; renderPuzzle();
+  document.getElementById('puzzleStats').textContent = 'Кликай на две части, чтобы поменять';
+}
+function renderPuzzle() {
+  const g = document.getElementById('puzzleGrid');
+  g.innerHTML = '';
+  puzzleState.forEach((v, idx) => {
+    const p = document.createElement('div');
+    p.className = 'puzzle-piece' + (idx === puzzleSelected ? ' selected' : '');
+    const r = Math.floor(v/3), c = v%3;
+    p.style.backgroundPosition = c*50+'% '+r*50+'%';
+    p.onclick = () => onPieceClick(idx);
+    g.appendChild(p);
+  });
+}
+function onPieceClick(idx) {
+  if (puzzleSelected === -1) { puzzleSelected = idx; renderPuzzle(); }
+  else if (puzzleSelected === idx) { puzzleSelected = -1; renderPuzzle(); }
+  else {
+    [puzzleState[puzzleSelected], puzzleState[idx]] = [puzzleState[idx], puzzleState[puzzleSelected]];
+    puzzleSelected = -1; renderPuzzle();
+    if (puzzleState.every((v,i) => v === i)) {
+      setTimeout(()=>{
+        document.getElementById('puzzleStats').innerHTML = '🎉 <b style="color:#e8c9a0;">Собрано! Ты умница!</b>';
+        unlockAchievement('puzzle_win');
+      }, 300);
+    }
+  }
+}
+
+/* ============ КОСМОС + ПОГОДА ============ */
+let cosmosLoaded = false;
+function openCosmosDay() {
+  document.getElementById('cosmosDayModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  if (!cosmosLoaded) loadCosmosDay();
+  unlockAchievement('cosmos_day');
+}
+async function loadCosmosDay() {
+  const box = document.getElementById('cosmosContent');
+  let apod = '', weather = '';
+  try {
+    const r = await fetch('https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=2008-09-26');
+    if (r.ok) {
+      const d = await r.json();
+      if (d.media_type === 'image') {
+        apod = '<div class="letter-text" style="margin:10px 0;"><span class="highlight">🌌 Что было в космосе</span></div><img src="'+d.url+'" class="space-photo" onerror="this.style.display=\'none\'"><div style="text-align:center;color:var(--gold);font-size:0.8rem;font-style:italic;margin-bottom:15px;">'+(d.title||'')+'</div>';
+      }
+    }
+  } catch(e){}
+  if (!apod) {
+    apod = '<div class="letter-text" style="margin:10px 0;"><span class="highlight">🌌 Что было в космосе</span></div><div style="text-align:center;padding:25px 15px;background:linear-gradient(160deg,#0a0015,#2d1b4e);border-radius:12px;margin-bottom:15px;"><div style="font-size:3rem;">✨🌙⭐</div><div style="color:#ffb6d5;font-style:italic;margin-top:10px;">В этот день звёзды светили особенно ярко —<br>как и твоя улыбка ✨</div></div>';
+  }
+  try {
+    const wR = await fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+PETROZAVODSK.lat+'&longitude='+PETROZAVODSK.lon+'&start_date=2008-09-26&end_date=2008-09-26&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,windspeed_10m_max&timezone=Europe/Moscow');
+    if (wR.ok) {
+      const w = await wR.json();
+      if (w.daily) {
+        const tmax = Math.round(w.daily.temperature_2m_max[0]);
+        const tmin = Math.round(w.daily.temperature_2m_min[0]);
+        const rain = w.daily.precipitation_sum[0] || 0;
+        const wind = Math.round(w.daily.windspeed_10m_max[0]);
+        const emoji = rain > 5 ? '🌧️' : rain > 0.5 ? '🌦️' : tmax < 5 ? '❄️' : '☀️';
+        weather = '<div class="letter-text" style="margin:10px 0;"><span class="highlight">🌤 Погода в Петрозаводске</span></div><div class="weather-grid"><div class="weather-box"><div class="weather-emoji">'+emoji+'</div><div class="weather-val">'+tmax+'°</div><div class="weather-label">Днём</div></div><div class="weather-box"><div class="weather-emoji">🌙</div><div class="weather-val">'+tmin+'°</div><div class="weather-label">Ночью</div></div><div class="weather-box"><div class="weather-emoji">💧</div><div class="weather-val">'+rain.toFixed(1)+'</div><div class="weather-label">Осадки, мм</div></div><div class="weather-box"><div class="weather-emoji">💨</div><div class="weather-val">'+wind+'</div><div class="weather-label">Ветер, км/ч</div></div></div>';
+      }
+    }
+  } catch(e){}
+  box.innerHTML = weather + apod + '<div class="elapsed-total" style="margin-top:15px;">И в этот день родилась <b>ты</b> ✨</div>';
+  cosmosLoaded = true;
+}
+
+/* ============ ПРОГНОЗ ============ */
+let forecastLoaded = false;
+function openForecast() {
+  document.getElementById('forecastModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  if (!forecastLoaded) loadForecast();
+}
+async function loadForecast() {
+  const box = document.getElementById('forecastContent');
+  try {
+    const r = await fetch('https://archive-api.open-meteo.com/v1/archive?latitude='+PETROZAVODSK.lat+'&longitude='+PETROZAVODSK.lon+'&start_date=2020-09-26&end_date=2024-09-26&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Europe/Moscow');
+    if (!r.ok) throw new Error();
+    const w = await r.json();
+    const maxA = w.daily.temperature_2m_max, minA = w.daily.temperature_2m_min, prA = w.daily.precipitation_sum;
+    const avgMax = Math.round(maxA.reduce((a,b)=>a+b,0)/maxA.length);
+    const avgMin = Math.round(minA.reduce((a,b)=>a+b,0)/minA.length);
+    const avgPr = (prA.reduce((a,b)=>a+b,0)/prA.length).toFixed(1);
+    const rainy = prA.filter(p=>p>1).length;
+    box.innerHTML = '<div class="forecast-grid"><div class="forecast-box"><div class="forecast-emoji">☀️</div><div class="forecast-val">'+avgMax+'°</div><div class="forecast-label">Днём обычно</div></div><div class="forecast-box"><div class="forecast-emoji">🌙</div><div class="forecast-val">'+avgMin+'°</div><div class="forecast-label">Ночью обычно</div></div><div class="forecast-box"><div class="forecast-emoji">💧</div><div class="forecast-val">'+avgPr+'</div><div class="forecast-label">Осадки, мм</div></div><div class="forecast-box"><div class="forecast-emoji">🌧️</div><div class="forecast-val">'+rainy+'/5</div><div class="forecast-label">Дождливых</div></div></div><div class="elapsed-total" style="margin-top:15px;">По данным за 5 лет<br><span style="font-size:0.85rem;opacity:0.8;">в этот день в Петрозаводске обычно так 🌷</span></div>';
+  } catch(e) {
+    box.innerHTML = '<div style="text-align:center;padding:20px;color:#e8c9a0;font-style:italic;">Не удалось загрузить 🥺<br>Но точно будет тепло — потому что ты рядом ✨</div>';
+  }
+  forecastLoaded = true;
+}
+
+/* ============ ЛУНА ============ */
+function getMoonPhase(date) {
+  const lp = 2551443;
+  const newMoon = new Date('2000-01-06T18:14:00Z').getTime()/1000;
+  const now = date.getTime()/1000;
+  let ph = ((now - newMoon) % lp) / lp;
+  if (ph < 0) ph += 1;
+  return ph;
+}
+function openMoon() {
+  const ph = getMoonPhase(new Date());
+  const illum = Math.round((1 - Math.abs(ph-0.5)*2)*100);
+  let emoji, name;
+  if (ph < 0.03 || ph > 0.97) { emoji='🌑'; name='Новолуние'; }
+  else if (ph < 0.22) { emoji='🌒'; name='Молодая Луна'; }
+  else if (ph < 0.28) { emoji='🌓'; name='Первая четверть'; }
+  else if (ph < 0.47) { emoji='🌔'; name='Прибывающая Луна'; }
+  else if (ph < 0.53) { emoji='🌕'; name='Полнолуние'; }
+  else if (ph < 0.72) { emoji='🌖'; name='Убывающая Луна'; }
+  else if (ph < 0.78) { emoji='🌗'; name='Последняя четверть'; }
+  else { emoji='🌘'; name='Старая Луна'; }
+  document.getElementById('moonEmoji').textContent = emoji;
+  document.getElementById('moonName').textContent = name;
+  document.getElementById('moonInfo').innerHTML = 'Освещённость: <b style="color:#ffb6d5;">'+illum+'%</b><br><span style="font-size:0.8rem;opacity:0.8;">Прямо сейчас, '+new Date().toLocaleDateString('ru-RU')+'</span>';
+  document.getElementById('moonModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+/* ============ ЗАМЕТКИ ============ */
+const DEFAULT_NOTES = [
+  'Ты — моя самая любимая причина просыпаться 🌅',
+  'Помни: даже в плохой день ты не одна ✨',
+  'Твоя улыбка — моё лучшее лекарство 💊',
+  'Ты самая красивая, даже когда думаешь иначе 🌸',
+  'Я всегда рядом. Даже если далеко ❤️'
+];
+function renderNotes() {
+  const notes = JSON.parse(localStorage.getItem('notes_her')||'null') || DEFAULT_NOTES;
+  const list = document.getElementById('notesList');
+  list.innerHTML = '';
+  notes.forEach((n, i) => {
+    const el = document.createElement('div');
+    el.className = 'note-item';
+    el.innerHTML = n + '<span class="note-del" onclick="deleteNote('+i+')">✕</span>';
+    list.appendChild(el);
+  });
+}
+function openNotes() {
+  renderNotes();
+  document.getElementById('notesModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function addNote() {
+  const ta = document.getElementById('noteText');
+  const t = ta.value.trim();
+  if (!t) return;
+  const n = JSON.parse(localStorage.getItem('notes_her')||'null') || DEFAULT_NOTES.slice();
+  n.push(t);
+  localStorage.setItem('notes_her', JSON.stringify(n));
+  ta.value = ''; renderNotes();
+}
+function deleteNote(i) {
+  const n = JSON.parse(localStorage.getItem('notes_her')||'null') || DEFAULT_NOTES.slice();
+  n.splice(i,1);
+  localStorage.setItem('notes_her', JSON.stringify(n));
+  renderNotes();
+}
+
+/* ============ ПРОЧИЕ МОДАЛКИ ============ */
+function openReasons() {
+  const list = document.getElementById('reasonsList');
+  list.innerHTML = '';
+  REASONS.forEach((r,i) => {
+    const el = document.createElement('div');
+    el.className = 'reason-item';
+    el.innerHTML = '<span class="reason-num">'+(i+1)+'.</span><span>'+r+'</span>';
+    list.appendChild(el);
+  });
+  document.getElementById('reasonsModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  unlockAchievement('reasons');
+}
+function openCapsule() {
+  const s = localStorage.getItem('capsule_text') || '';
+  const sd = localStorage.getItem('capsule_date');
+  const ta = document.getElementById('capsuleText');
+  const info = document.getElementById('capsuleInfo');
+  const btn = document.getElementById('capsuleSaveBtn');
+  if (sd && new Date() >= CAPSULE_OPEN) {
+    ta.value = s; ta.readOnly = true;
+    info.innerHTML = '✨ Твоё послание из прошлого:<br><span style="color:var(--lace);font-size:0.9rem;">'+s+'</span>';
+    btn.style.display = 'none';
+  } else {
+    ta.value = s; ta.readOnly = false; btn.style.display = '';
+    info.textContent = sd ? '🔒 Сохранено. Откроется 26.09.2027' : '🔒 Откроется 26 сентября 2027';
+  }
+  document.getElementById('capsuleModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  unlockAchievement('capsule');
+}
+function saveCapsule() {
+  const t = document.getElementById('capsuleText').value.trim();
+  if (!t) return;
+  localStorage.setItem('capsule_text', t);
+  localStorage.setItem('capsule_date', new Date().toISOString());
+  document.getElementById('capsuleInfo').textContent = '✅ Сохранено!';
+}
+const FLOWERS = ['🌸','🌺','🌷','🌹','💐','🌻','🌼','💮'];
+function addFlower() {
+  const f = JSON.parse(localStorage.getItem('bouquet')||'[]');
+  f.push(FLOWERS[Math.floor(Math.random()*FLOWERS.length)]);
+  localStorage.setItem('bouquet', JSON.stringify(f));
+  localStorage.setItem('bouquet_last', new Date().toDateString());
+  renderBouquet();
+  if (f.length >= 10) unlockAchievement('bouquet10');
+}
+function renderBouquet() {
+  const f = JSON.parse(localStorage.getItem('bouquet')||'[]');
+  const box = document.getElementById('bouquet');
+  const c = document.getElementById('bouquetCount');
+  box.innerHTML = '';
+  f.forEach(x => { const el = document.createElement('div'); el.className='flower'; el.textContent = x; box.appendChild(el); });
+  c.textContent = 'В букете: ' + f.length + ' ' + plural(f.length,'цветок','цветка','цветов');
+}
+function openBouquet() {
+  const today = new Date().toDateString();
+  if (localStorage.getItem('bouquet_last') !== today) addFlower();
+  else renderBouquet();
+  document.getElementById('bouquetModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function openDates() {
+  const list = document.getElementById('datesList');
+  list.innerHTML = '';
+  IMPORTANT_DATES.forEach(d => {
+    const now = new Date();
+    let next = new Date(now.getFullYear(), d.date.getMonth(), d.date.getDate(), d.date.getHours(), d.date.getMinutes());
+    if (next < now) next = new Date(now.getFullYear()+1, d.date.getMonth(), d.date.getDate(), d.date.getHours(), d.date.getMinutes());
+    const days = Math.floor((next-now)/86400000);
+    const el = document.createElement('div');
+    el.className = 'date-item';
+    el.innerHTML = '<div class="date-emoji">'+d.emoji+'</div><div class="date-info"><div class="date-name">'+d.name+'</div><div class="date-date">'+String(d.date.getDate()).padStart(2,'0')+'.'+String(d.date.getMonth()+1).padStart(2,'0')+'.'+d.date.getFullYear()+'</div></div><div class="date-countdown">'+days+'<small>'+plural(days,'день','дня','дней')+'</small></div>';
+    list.appendChild(el);
+  });
+  document.getElementById('datesModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  unlockAchievement('dates');
+}
+function openLetter() {
+  document.getElementById('letterModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  unlockAchievement('letter');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay').forEach(m => closeModal(m.id));
+    closeSpaceGame(); closeKissGame();
+  }
+});
+function openRomanticCal() {
+  const g = document.getElementById('calendarGrid');
+  g.innerHTML = '';
+  ROMANTIC_IDEAS.forEach(i => {
+    const el = document.createElement('div');
+    el.className = 'cal-card';
+    el.innerHTML = '<div class="cal-emoji">'+i.emoji+'</div><div class="cal-month">'+i.month+'</div><div class="cal-idea">'+i.idea+'</div>';
+    g.appendChild(el);
+  });
+  document.getElementById('romanticCalModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+const POEM_TEXT = `
+  <div class="title">— Тебе —</div>
+  <span class="stanza">Мы встретились случайно, в ноябре —<br>Два сообщения, семнадцать ноль три.<br>Тогда ещё никто на всей земле<br>Не знал, что это — первые шаги.</span>
+  <span class="stanza">Я помню нашу первую прогулку,<br>Разводные мосты в ночной тиши.<br>Я на тебя смотрел — и, как в шкатулку,<br>Складывал в груди: дыши, дыши.</span>
+  <span class="stanza">Потом признание — в час ночи где-то,<br>Когда уже нельзя было молчать.<br>Я понял: вот оно, моё рассветное,<br>То, что хочу я рядом удержать.</span>
+  <span class="stanza">Ты приехала — и первый мой букет,<br>И первый поцелуй, спонтанный, тёплый.<br>С тех пор в моей душе включают свет<br>Твои глаза, твой смех, твои ладони.</span>
+  <span class="stanza">Парные тату, знакомство с семьёй,<br>Поездка в Бытошь, поздние звонки.<br>Ты — самая родная и моя,<br>Мой лучик среди звёздной тишины.</span>
+  <span class="stanza">И в этот день, когда весь мир замрёт,<br>Я повторю всего четыре слова:<br>Спасибо, что ты есть. Спасибо, что живёшь.<br>И знай — я рядом. Снова. И снова.</span>
+`;
+function openPoem() {
+  document.getElementById('poemContent').innerHTML = POEM_TEXT;
+  document.getElementById('poemModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+/* ============ ПИСЬМО-СЮРПРИЗ ============ */
+let slowLetterStarted = false;
+function openSlowLetter() {
+  document.getElementById('slowLetterModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  const el = document.getElementById('slowLetterContent');
+  el.textContent = '';
+  if (!isBirthdayUnlocked()) {
+    el.innerHTML = '<div class="date">🔒 Запечатано до 26.09.2026</div>Это письмо откроется само, когда наступит твой день рождения. Немного терпения ✨';
+    return;
+  }
+  if (slowLetterStarted) { el.textContent = SLOW_LETTER_TEXT; return; }
+  slowLetterStarted = true;
+  let i = 0;
+  const timer = setInterval(() => {
+    el.textContent = SLOW_LETTER_TEXT.slice(0, i);
+    i++;
+    if (i > SLOW_LETTER_TEXT.length) clearInterval(timer);
+  }, 35);
+}
+
+/* ============ ВОЛШЕБНЫЙ САД ============ */
+function getGarden() { return JSON.parse(localStorage.getItem('garden')||'[]'); }
+function saveGarden(g) { localStorage.setItem('garden', JSON.stringify(g)); }
+const GARDEN_STAGES = ['🌱','🌿','🍀','🌷','🌻','🌸','🌺','💐','🌳','🌹'];
+function renderGarden() {
+  const g = getGarden();
+  const box = document.getElementById('gardenRow');
+  const st = document.getElementById('gardenStats');
+  box.innerHTML = '';
+  if (g.length === 0) {
+    box.innerHTML = '<div style="color:var(--gold);font-style:italic;text-align:center;width:100%;padding:40px 10px;">Сад пуст 🌱<br>Полей его — и появится первый росток</div>';
+  } else {
+    g.forEach(stage => {
+      const el = document.createElement('div');
+      el.className = 'garden-plant';
+      el.textContent = stage;
+      box.appendChild(el);
+    });
+  }
+  st.textContent = 'В саду: ' + g.length + ' ' + plural(g.length,'растение','растения','растений');
+}
+function waterGarden() {
+  const g = getGarden();
+  const lastWater = localStorage.getItem('garden_last');
+  const today = new Date().toDateString();
+  if (lastWater === today) {
+    showWarmToast('Ты уже полила сад сегодня 💧 Приходи завтра 🌸');
+    return;
+  }
+  const nextStage = GARDEN_STAGES[Math.min(g.length, GARDEN_STAGES.length-1)];
+  g.push(nextStage);
+  saveGarden(g);
+  localStorage.setItem('garden_last', today);
+  renderGarden();
+  showWarmToast('Сад подрос! 🌱💕');
+  if (g.length >= 5) unlockAchievement('garden5');
+}
+function openGarden() {
+  renderGarden();
+  document.getElementById('gardenModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+/* ============ НАЙДИ СЕКРЕТЫ ============ */
+const SECRETS_LIST = [
+  { id: 'corner_tl', name: 'Уголок в левом верхнем углу' },
+  { id: 'corner_tr', name: 'Уголок в правом верхнем углу' },
+  { id: 'corner_bl', name: 'Уголок в левом нижнем углу' },
+  { id: 'corner_br', name: 'Уголок в правом нижнем углу' },
+  { id: 'center_tap', name: 'Пять тапов по заголовку' }
+];
+function getFoundSecrets() { return JSON.parse(localStorage.getItem('found_secrets')||'[]'); }
+function markSecretFound(id) {
+  const f = getFoundSecrets();
+  if (f.includes(id)) return;
+  f.push(id);
+  localStorage.setItem('found_secrets', JSON.stringify(f));
+  const s = SECRETS_LIST.find(x => x.id === id);
+  if (s) showWarmToast('🗝️ Найден секрет: ' + s.name);
+  if (f.length >= 5) unlockAchievement('secrets_all');
+  if (f.length >= 3) unlockAchievement('secrets_3');
+}
+function renderSecrets() {
+  const found = getFoundSecrets();
+  const list = document.getElementById('secretsList');
+  const c = document.getElementById('secretsCounter');
+  list.innerHTML = '';
+  SECRETS_LIST.forEach(s => {
+    const isFound = found.includes(s.id);
+    const el = document.createElement('div');
+    el.className = 'secret-item' + (isFound ? ' found' : '');
+    el.textContent = isFound ? '✅ ' + s.name : '🔒 Секрет №' + (SECRETS_LIST.indexOf(s)+1);
+    list.appendChild(el);
+  });
+  c.textContent = 'Найдено: ' + found.length + ' из 5';
+}
+function openSecrets() {
+  renderSecrets();
+  document.getElementById('secretsModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function addSecretZone(id, style) {
+  const z = document.createElement('div');
+  z.className = 'secret-zone';
+  z.style.cssText = style;
+  z.onclick = () => markSecretFound(id);
+  document.body.appendChild(z);
+}
+addSecretZone('corner_tl', 'top:0;left:0;');
+addSecretZone('corner_tr', 'top:0;right:0;');
+addSecretZone('corner_bl', 'bottom:0;left:0;');
+addSecretZone('corner_br', 'bottom:0;right:0;');
+let titleTaps = 0;
+document.getElementById('title').addEventListener('click', () => {
+  titleTaps++;
+  if (titleTaps >= 5) { markSecretFound('center_tap'); titleTaps = 0; }
+});
+
+/* ============ СОННИК ============ */
+function openDream() {
+  const g = document.getElementById('dreamGrid');
+  g.innerHTML = '';
+  DREAMS.forEach((d) => {
+    const b = document.createElement('div');
+    b.className = 'dream-btn';
+    b.innerHTML = '<span class="dream-emoji">'+d.emoji+'</span><span class="dream-label">'+d.label+'</span>';
+    b.onclick = () => {
+      document.querySelectorAll('.dream-btn').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      document.getElementById('dreamResult').textContent = d.text;
+    };
+    g.appendChild(b);
+  });
+  document.getElementById('dreamResult').textContent = 'Выбери сон 👆';
+  document.getElementById('dreamModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+/* ============ УЖИН ============ */
+const cCv = document.getElementById('cookCanvas');
+const cCtx = cCv.getContext('2d');
+const cook = { running:false, score:0, miss:0, plateX:0, targetX:0, items:[], lastSpawn:0, spawnInterval:700, w:0, h:0, dpr:1, popups:[] };
+const COOK_TARGET = 20;
+const FOOD = ['🍅','🧅','🥕','🧄','🌿','🧀','🥩','🍞','🍄','🥑'];
+function resizeCook() {
+  const wrap = cCv.parentElement;
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  if (!w || !h) return;
+  const dpr = window.devicePixelRatio || 1;
+  cook.w = w; cook.h = h; cook.dpr = dpr;
+  cCv.width = w*dpr; cCv.height = h*dpr;
+  cCv.style.width = w+'px'; cCv.style.height = h+'px';
+  cCtx.setTransform(dpr,0,0,dpr,0,0);
+}
+function cookDraw() {
+  const w = cook.w, h = cook.h;
+  if (!w || !h) return;
+  const g = cCtx.createLinearGradient(0,0,0,h);
+  g.addColorStop(0,'#2a1505'); g.addColorStop(0.5,'#4a2810'); g.addColorStop(1,'#6b3d18');
+  cCtx.fillStyle = g; cCtx.fillRect(0,0,w,h);
+  cCtx.textAlign = 'center'; cCtx.textBaseline = 'middle';
+  for (const it of cook.items) {
+    cCtx.font = it.size + 'px serif';
+    cCtx.fillText(it.emoji, it.x, it.y);
+  }
+  cCtx.save();
+  const px = cook.plateX, py = h-60;
+  cCtx.font = '58px serif';
+  cCtx.shadowBlur = 15; cCtx.shadowColor = 'rgba(255,204,128,0.6)';
+  cCtx.fillText('🍽️', px, py);
+  cCtx.restore();
+  for (let i=cook.popups.length-1;i>=0;i--) {
+    const p = cook.popups[i];
+    p.y -= 1.5; p.life -= 0.02;
+    if (p.life <= 0) { cook.popups.splice(i,1); continue; }
+    cCtx.globalAlpha = p.life;
+    cCtx.fillStyle = p.bad ? '#ff6b6b' : '#ffcc80';
+    cCtx.font = 'bold 22px Courier New';
+    cCtx.fillText(p.text, p.x, p.y);
+  }
+  cCtx.globalAlpha = 1;
+}
+function cookLoop(t) {
+  if (!cook.running) return;
+  if (t - cook.lastSpawn > cook.spawnInterval) {
+    cook.lastSpawn = t;
+    const isTrash = Math.random() < 0.22;
+    const emoji = isTrash ? '🗑️' : FOOD[Math.floor(Math.random()*FOOD.length)];
+    cook.items.push({ x:40+Math.random()*(cook.w-80), y:-40, vy:2+Math.random()*1.5+cook.score*0.02, vx:(Math.random()-0.5)*0.8, emoji, bad:isTrash, size:36 });
+  }
+  for (let i=cook.items.length-1;i>=0;i--) {
+    const it = cook.items[i];
+    it.y += it.vy; it.x += it.vx;
+    if (it.y > cook.h+50) cook.items.splice(i,1);
+  }
+  cook.plateX += (cook.targetX - cook.plateX)*0.22;
+  const py = cook.h-60;
+  for (let i=cook.items.length-1;i>=0;i--) {
+    const it = cook.items[i];
+    const dx = it.x - cook.plateX, dy = it.y - py;
+    if (Math.sqrt(dx*dx+dy*dy) < 42) {
+      if (it.bad) { cook.miss++; cook.popups.push({ x:it.x, y:it.y, text:'Ой!', life:1, bad:true }); }
+      else { cook.score++; cook.popups.push({ x:it.x, y:it.y, text:'+1', life:1 }); }
+      document.getElementById('cookScore').textContent = cook.score;
+      document.getElementById('cookMiss').textContent = cook.miss;
+      cook.items.splice(i,1);
+      if (cook.score >= COOK_TARGET) { winCook(); return; }
+    }
+  }
+  cookDraw(); requestAnimationFrame(cookLoop);
+}
+function startCook() {
+  cook.running = false; cook.score = 0; cook.miss = 0;
+  cook.items = []; cook.popups = []; cook.lastSpawn = performance.now(); cook.spawnInterval = 700;
+  document.getElementById('cookScore').textContent = '0';
+  document.getElementById('cookMiss').textContent = '0';
+  document.getElementById('cookMessage').classList.remove('active');
+  resizeCook();
+  cook.plateX = cook.w/2; cook.targetX = cook.w/2;
+  cook.running = true; requestAnimationFrame(cookLoop);
+}
+function winCook() {
+  cook.running = false;
+  document.getElementById('cookMsgContent').innerHTML = '<div style="font-size:3rem;margin-bottom:15px;">🍝🥂✨</div><div class="game-msg-title" style="color:#ffcc80;">Ужин готов!</div><p class="game-msg-text">Сегодня на столе: <b style="color:#ffcc80;">паста с томатами</b><br>Собрано: <b style="color:#ffcc80;">'+cook.score+'</b><br>Помех: <b>'+cook.miss+'</b><br><br><i>А ещё — бесконечная любовь в качестве гарнира 💕</i></p><button class="letter-btn" onclick="startCook()">🔄 Готовить ещё</button>';
+  document.getElementById('cookMessage').classList.add('active');
+}
+function openCook() {
+  document.getElementById('cookOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  setTimeout(()=>{ resizeCook(); cookDraw(); }, 50);
+}
+function closeCook() {
+  cook.running = false;
+  document.getElementById('cookOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+cCv.addEventListener('pointermove', e => { const r = cCv.getBoundingClientRect(); cook.targetX = e.clientX - r.left; });
+cCv.addEventListener('pointerdown', e => { const r = cCv.getBoundingClientRect(); cook.targetX = e.clientX - r.left; });
+window.addEventListener('resize', () => { if (document.getElementById('cookOverlay').classList.contains('active')) resizeCook(); });
+
+/* ============ ТЕТРИС ============ */
+const tCv = document.getElementById('tetrisCanvas');
+const tCtx = tCv.getContext('2d');
+const T_SHAPES = [
+  [[1,1,1,1]],[[1,1],[1,1]],[[0,1,0],[1,1,1]],[[0,1,1],[1,1,0]],[[1,1,0],[0,1,1]],[[1,0,0],[1,1,1]],[[0,0,1],[1,1,1]]
+];
+const tS = { running:false, cols:10, rows:18, grid:[], piece:null, px:0, py:0, score:0, lines:0, dropTimer:0, dropInterval:800, lastTime:0, raf:null, cell:22 };
+function tInit() { tS.grid = []; for (let r=0;r<tS.rows;r++) tS.grid.push(new Array(tS.cols).fill(0)); }
+function tSpawn() {
+  tS.piece = T_SHAPES[Math.floor(Math.random()*T_SHAPES.length)].map(r=>r.slice());
+  tS.px = Math.floor((tS.cols - tS.piece[0].length)/2);
+  tS.py = 0;
+  if (tCollide()) { tGameOver(); return false; }
+  return true;
+}
+function tCollide() {
+  for (let r=0;r<tS.piece.length;r++)
+    for (let c=0;c<tS.piece[r].length;c++) {
+      if (!tS.piece[r][c]) continue;
+      const x = tS.px+c, y = tS.py+r;
+      if (x<0 || x>=tS.cols || y>=tS.rows) return true;
+      if (y>=0 && tS.grid[y][x]) return true;
+    }
+  return false;
+}
+function tMerge() {
+  for (let r=0;r<tS.piece.length;r++)
+    for (let c=0;c<tS.piece[r].length;c++) {
+      if (!tS.piece[r][c]) continue;
+      const y = tS.py+r, x = tS.px+c;
+      if (y>=0) tS.grid[y][x] = 1;
+    }
+}
+function tClear() {
+  let cl = 0;
+  for (let r=tS.rows-1;r>=0;r--) {
+    if (tS.grid[r].every(v=>v)) {
+      tS.grid.splice(r,1); tS.grid.unshift(new Array(tS.cols).fill(0));
+      cl++; r++;
+    }
+  }
+  if (cl) { tS.lines += cl; tS.score += cl*100; document.getElementById('tetrisScore').textContent = tS.score; document.getElementById('tetrisLines').textContent = tS.lines; }
+}
+function tResize() {
+  const wrap = tCv.parentElement;
+  const w = wrap.clientWidth-20, h = wrap.clientHeight-20;
+  const cell = Math.min(Math.floor(w/tS.cols), Math.floor(h/tS.rows), 28);
+  tS.cell = cell;
+  const cw = cell*tS.cols, ch = cell*tS.rows;
+  tCv.width = cw*(window.devicePixelRatio||1);
+  tCv.height = ch*(window.devicePixelRatio||1);
+  tCv.style.width = cw+'px'; tCv.style.height = ch+'px';
+  tCtx.setTransform(window.devicePixelRatio||1,0,0,window.devicePixelRatio||1,0,0);
+  tDraw();
+}
+function tDraw() {
+  const cell = tS.cell;
+  tCtx.clearRect(0,0,tCv.width,tCv.height);
+  tCtx.font = (cell-4)+'px serif';
+  tCtx.textAlign = 'center'; tCtx.textBaseline = 'middle';
+  for (let r=0;r<tS.rows;r++)
+    for (let c=0;c<tS.cols;c++)
+      if (tS.grid[r][c]) tCtx.fillText('❤️', c*cell+cell/2, r*cell+cell/2);
+  if (tS.piece) {
+    for (let r=0;r<tS.piece.length;r++)
+      for (let c=0;c<tS.piece[r].length;c++)
+        if (tS.piece[r][c]) tCtx.fillText('💗', (tS.px+c)*cell+cell/2, (tS.py+r)*cell+cell/2);
+  }
+}
+function tLoop(t) {
+  if (!tS.running) return;
+  const dt = t - tS.lastTime; tS.lastTime = t;
+  tS.dropTimer += dt;
+  if (tS.dropTimer > tS.dropInterval) {
+    tS.dropTimer = 0; tS.py++;
+    if (tCollide()) { tS.py--; tMerge(); tClear(); if (!tSpawn()) return; }
+  }
+  tDraw(); tS.raf = requestAnimationFrame(tLoop);
+}
+function tetrisMove(d) { if (!tS.running) return; tS.px += d; if (tCollide()) tS.px -= d; tDraw(); }
+function tetrisRotate() {
+  if (!tS.running || !tS.piece) return;
+  const rot = tS.piece[0].map((_,i)=>tS.piece.map(r=>r[i]).reverse());
+  const old = tS.piece; tS.piece = rot;
+  if (tCollide()) tS.piece = old;
+  tDraw();
+}
+function tetrisDrop() { if (!tS.running) return; while (!tCollide()) tS.py++; tS.py--; tMerge(); tClear(); tSpawn(); tDraw(); }
+function tGameOver() {
+  tS.running = false;
+  if (tS.raf) cancelAnimationFrame(tS.raf);
+  document.getElementById('tetrisMsgContent').innerHTML = '<div style="font-size:3rem;margin-bottom:15px;">💔</div><div class="game-msg-title" style="color:#ffb6d5;">Игра окончена</div><p class="game-msg-text">Счёт: <b style="color:#ffb6d5;">'+tS.score+'</b><br>Линий: <b style="color:#ffb6d5;">'+tS.lines+'</b><br><br><i>Сердечки всё равно остались 💕</i></p><button class="letter-btn" onclick="startTetris()">🔄 Ещё раз</button>';
+  document.getElementById('tetrisMessage').classList.add('active');
+}
+function startTetris() {
+  tS.running = false;
+  if (tS.raf) cancelAnimationFrame(tS.raf);
+  tS.score = 0; tS.lines = 0; tS.dropTimer = 0;
+  document.getElementById('tetrisScore').textContent = '0';
+  document.getElementById('tetrisLines').textContent = '0';
+  document.getElementById('tetrisMessage').classList.remove('active');
+  tInit(); tResize(); tSpawn();
+  tS.running = true; tS.lastTime = performance.now();
+  tS.raf = requestAnimationFrame(tLoop);
+}
+function openTetris() {
+  document.getElementById('tetrisOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  setTimeout(()=>{ tResize(); tDraw(); }, 60);
+}
+function closeTetris() {
+  tS.running = false;
+  if (tS.raf) cancelAnimationFrame(tS.raf);
+  document.getElementById('tetrisOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if (!tS.running) return;
+  if (e.key === 'ArrowLeft') { tetrisMove(-1); e.preventDefault(); }
+  if (e.key === 'ArrowRight') { tetrisMove(1); e.preventDefault(); }
+  if (e.key === 'ArrowDown') { tetrisDrop(); e.preventDefault(); }
+  if (e.key === 'ArrowUp') { tetrisRotate(); e.preventDefault(); }
+});
+window.addEventListener('resize', () => { if (document.getElementById('tetrisOverlay').classList.contains('active')) tResize(); });
+
+/* ============ ДОСТИЖЕНИЯ ============ */
+const ACHIEVEMENTS = [
+  { id:'first_visit', emoji:'🌟', name:'Первый заход', desc:'Открыла наш сайт' },
+  { id:'letter', emoji:'💌', name:'Прочитала послание', desc:'Открыла письмо с фото' },
+  { id:'reasons', emoji:'💖', name:'100 причин', desc:'Прочитала все причины' },
+  { id:'capsule', emoji:'⏰', name:'Капсула времени', desc:'Открыла капсулу' },
+  { id:'bouquet10', emoji:'💐', name:'Букет из 10', desc:'10 цветов в букете' },
+  { id:'dates', emoji:'📅', name:'Хранительница дат', desc:'Посмотрела важные даты' },
+  { id:'kiss_game', emoji:'💋', name:'Ловец поцелуев', desc:'Открыла игру' },
+  { id:'kiss50', emoji:'💞', name:'50 поцелуев', desc:'Поймала 50 за раз' },
+  { id:'space_game', emoji:'🚀', name:'Космонавт', desc:'Запустила космос' },
+  { id:'space100', emoji:'👑', name:'Звёздная принцесса', desc:'Собрала 1000 сердец' },
+  { id:'hearts_game', emoji:'❤️', name:'Ловкая', desc:'Поймала 10 сердечек' },
+  { id:'hearts50', emoji:'💝', name:'Сердцеедка', desc:'Поймала 50 сердечек' },
+  { id:'puzzle_open', emoji:'🧩', name:'Головоломка', desc:'Открыла пазл' },
+  { id:'puzzle_win', emoji:'🏅', name:'Собрала пазл', desc:'Прошла головоломку' },
+  { id:'cosmos_day', emoji:'🌌', name:'В тот самый день', desc:'Узнала про 26.09.2008' },
+  { id:'theme', emoji:'🎨', name:'Экспериментатор', desc:'Поменяла тему' },
+  { id:'visits10', emoji:'💕', name:'10 заходов', desc:'Зашла 10 раз' },
+  { id:'visits50', emoji:'👑', name:'50 заходов', desc:'Зашла 50 раз' },
+  { id:'garden5', emoji:'🌻', name:'Садовница', desc:'5 растений в саду' },
+  { id:'secrets_3', emoji:'🗝️', name:'Искательница', desc:'3 секрета найдено' },
+  { id:'secrets_all', emoji:'🔑', name:'Хранительница тайн', desc:'Все секреты найдены' }
+];
+function unlockAchievement(id) {
+  const u = JSON.parse(localStorage.getItem('achievements')||'[]');
+  if (u.includes(id)) return;
+  u.push(id);
+  localStorage.setItem('achievements', JSON.stringify(u));
+  const a = ACHIEVEMENTS.find(x=>x.id===id);
+  if (!a) return;
+  const n = document.createElement('div');
+  n.style.cssText = 'position:fixed;left:50%;bottom:120px;transform:translateX(-50%);background:linear-gradient(135deg,#6b1428,#4a0e1a);border:1px solid #e8c9a0;color:#fff8f0;padding:10px 18px;border-radius:30px;font-family:Georgia,serif;font-style:italic;box-shadow:0 10px 30px rgba(232,201,160,0.5);z-index:1000;pointer-events:none;opacity:0;transition:opacity 0.4s;max-width:90vw;text-align:center;font-size:0.9rem;';
+  n.innerHTML = '🏆 Новое: <b style="color:#e8c9a0;">'+a.name+'</b>';
+  document.body.appendChild(n);
+  setTimeout(()=>n.style.opacity='1',50);
+  setTimeout(()=>n.style.opacity='0',3000);
+  setTimeout(()=>n.remove(),3500);
+}
+function openAchievements() {
+  const u = JSON.parse(localStorage.getItem('achievements')||'[]');
+  const list = document.getElementById('achList');
+  list.innerHTML = '';
+  ACHIEVEMENTS.forEach(a => {
+    const el = document.createElement('div');
+    el.className = 'ach-big' + (u.includes(a.id)?' unlocked':'');
+    el.innerHTML = '<div class="ach-emoji">'+a.emoji+'</div><div class="ach-text"><div class="ach-name">'+a.name+'</div><div class="ach-desc">'+a.desc+'</div></div><div class="ach-check">'+(u.includes(a.id)?'✅':'🔒')+'</div>';
+    list.appendChild(el);
+  });
+  document.getElementById('achCount').textContent = u.length + ' из ' + ACHIEVEMENTS.length + ' открыто';
+  document.getElementById('achievementsModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+unlockAchievement('first_visit');
+let visitCount = parseInt(localStorage.getItem('visit_count')||'0') + 1;
+localStorage.setItem('visit_count', visitCount);
+if (visitCount >= 10) unlockAchievement('visits10');
+if (visitCount >= 50) unlockAchievement('visits50');
+
+/* ============ ПОДЕЛИТЬСЯ ============ */
+function shareSite() {
+  const url = window.location.href;
+  const text = 'Смотри какой сайт я сделал для тебя 💕';
+  if (navigator.share) navigator.share({ title:'Для тебя ❤️', text, url }).catch(()=>{});
+  else if (navigator.clipboard) navigator.clipboard.writeText(url).then(()=>showWarmToast('Ссылка скопирована!')).catch(()=>showWarmToast('Ссылка: '+url));
+  else showWarmToast('Ссылка: '+url);
+}
+
+/* ============ ТЁПЛЫЕ СЛОВА ============ */
+function showWarmToast(text) {
+  const t = document.createElement('div');
+  t.className = 'warm-toast';
+  t.textContent = text;
+  document.body.appendChild(t);
+  setTimeout(()=>t.style.opacity='1', 50);
+  setTimeout(()=>t.style.opacity='0', 3000);
+  setTimeout(()=>t.remove(), 3600);
+}
+function scheduleWarmWords() {
+  const delay = 90000 + Math.random()*120000;
+  setTimeout(() => {
+    if (!document.hidden) showWarmToast(WARM_WORDS[Math.floor(Math.random()*WARM_WORDS.length)]);
+    scheduleWarmWords();
+  }, delay);
+}
+setTimeout(scheduleWarmWords, 60000);
+
+/* ============ СОХРАНИТЬ / ЗАГРУЗИТЬ ============ */
+function collectProgress() {
+  return {
+    version: 1,
+    date: new Date().toISOString(),
+    score_hearts: localStorage.getItem('score_hearts') || '0',
+    score_space: localStorage.getItem('score_space') || '0',
+    achievements: localStorage.getItem('achievements') || '[]',
+    bouquet: localStorage.getItem('bouquet') || '[]',
+    bouquet_last: localStorage.getItem('bouquet_last') || '',
+    capsule_text: localStorage.getItem('capsule_text') || '',
+    capsule_date: localStorage.getItem('capsule_date') || '',
+    notes_her: localStorage.getItem('notes_her') || 'null',
+    garden: localStorage.getItem('garden') || '[]',
+    garden_last: localStorage.getItem('garden_last') || '',
+    found_secrets: localStorage.getItem('found_secrets') || '[]',
+    visit_count: localStorage.getItem('visit_count') || '0',
+    theme: localStorage.getItem('theme') || 'dark'
+  };
+}
+function saveProgress() {
+  const data = collectProgress();
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type:'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'progress-' + new Date().toISOString().slice(0,10) + '.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+  showWarmToast('💾 Прогресс сохранён!');
+}
+function loadProgressClick() { document.getElementById('progressFileInput').click(); }
+function loadProgressFile(e) {
+  const f = e.target.files[0];
+  if (!f) return;
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    try {
+      const data = JSON.parse(ev.target.result);
+      Object.keys(data).forEach(k => {
+        if (k === 'version' || k === 'date') return;
+        if (data[k] !== undefined && data[k] !== null) localStorage.setItem(k, data[k]);
+      });
+      showWarmToast('📥 Прогресс загружен! Обновляю…');
+      setTimeout(()=>location.reload(), 1500);
+    } catch(err) { showWarmToast('❌ Не удалось прочитать файл'); }
+  };
+  reader.readAsText(f);
+}
+function resetAll() {
+  if (!confirm('Точно сбросить весь прогресс? Это удалит достижения, букет, сад и счёт игр.')) return;
+  const keep = ['envelope_opened','theme'];
+  Object.keys(localStorage).forEach(k => { if (!keep.includes(k)) localStorage.removeItem(k); });
+  showWarmToast('🔄 Прогресс сброшен');
+  setTimeout(()=>location.reload(), 1200);
+}
+
+/* ============ ФИНАЛЬНАЯ ИНИЦИАЛИЗАЦИЯ ============ */
+renderPlaylist();
+updatePlBtn();
+renderBouquet();
+console.log('💕 Сайт загружен. С любовью.');
+</script>
+</body>
 </html>
