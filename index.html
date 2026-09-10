@@ -27,7 +27,6 @@
     position: relative;
   }
 
-  /* ===== САЛЮТ ===== */
   #fireworksCanvas {
     position: fixed; inset: 0;
     pointer-events: none; z-index: 3;
@@ -35,7 +34,6 @@
   }
   #fireworksCanvas.show { opacity: 1; }
 
-  /* ===== КРУЖЕВО ===== */
   .lace-bg {
     position: fixed; inset: 0;
     pointer-events: none; z-index: 0; opacity: 0.35;
@@ -44,7 +42,6 @@
     background-size: 80px 80px;
   }
 
-  /* ===== ПАДАЮЩИЕ СЕРДЕЧКИ ===== */
   .hearts-rain {
     position: fixed; inset: 0;
     pointer-events: none; overflow: hidden; z-index: 1;
@@ -55,14 +52,12 @@
   }
   @keyframes rain { to { transform: translateY(110vh) rotate(360deg); opacity: 0; } }
 
-  /* ===== КОНТЕЙНЕР ===== */
   .container {
     position: relative; z-index: 2;
     max-width: 780px; margin: 0 auto;
     padding: 40px 20px 80px; text-align: center;
   }
 
-  /* ===== РАМКА ===== */
   .frame {
     position: relative; padding: 45px 25px;
     background: rgba(255, 248, 240, 0.03); border-radius: 8px;
@@ -86,7 +81,6 @@
     margin-bottom: 35px; font-style: italic; opacity: 0.9;
   }
 
-  /* ===== ТАЙМЕР ===== */
   .timer {
     display: flex; justify-content: center; gap: 10px;
     flex-wrap: wrap; margin: 30px 0;
@@ -116,7 +110,6 @@
     margin-top: 6px; font-style: italic;
   }
 
-  /* ===== КНОПКИ ===== */
   .btn-row {
     display: flex; gap: 12px; justify-content: center;
     flex-wrap: wrap; margin-top: 25px;
@@ -149,7 +142,6 @@
     50%      { box-shadow: 0 8px 30px rgba(232, 201, 160, 0.4), inset 0 0 25px rgba(232, 201, 160, 0.2); }
   }
 
-  /* ===== МУЗЫКА ===== */
   .music-btn {
     position: fixed; top: 20px; right: 20px;
     width: 48px; height: 48px; border-radius: 50%;
@@ -167,7 +159,6 @@
     50%      { box-shadow: 0 4px 25px rgba(232, 201, 160, 0.7), inset 0 0 20px rgba(232, 201, 160, 0.4); }
   }
 
-  /* ===== МИНИ-ИГРА В СЕРДЕЧКИ ===== */
   .game-section {
     margin-top: 50px; padding: 30px 20px;
     background: rgba(255, 248, 240, 0.04);
@@ -219,7 +210,6 @@
     100% { transform: scale(1); }
   }
 
-  /* ===== ЛЕТАЮЩЕЕ СЕРДЦЕ ===== */
   .click-heart {
     position: fixed; font-size: 42px; cursor: pointer;
     user-select: none; z-index: 5;
@@ -251,7 +241,6 @@
     100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0.3); }
   }
 
-  /* ===== МОДАЛКИ ===== */
   .modal-overlay {
     position: fixed; inset: 0;
     background: rgba(20, 4, 8, 0.92); backdrop-filter: blur(8px);
@@ -289,7 +278,6 @@
     color: var(--gold); margin-bottom: 25px; letter-spacing: 1px;
   }
 
-  /* ===== ФОТО ===== */
   .photo-row {
     display: flex; gap: 12px; justify-content: center;
     flex-wrap: wrap; margin-bottom: 25px;
@@ -311,7 +299,6 @@
     text-align: center; padding: 10px; font-style: italic;
   }
 
-  /* ===== ТЕКСТ ПОСЛАНИЙ ===== */
   .letter-text {
     text-align: center; line-height: 1.9; font-size: 1.05rem;
     color: var(--lace); padding: 0 10px; font-style: italic;
@@ -329,7 +316,6 @@
     font-style: italic; font-size: 1rem; padding-right: 15px;
   }
 
-  /* ===== "СКОЛЬКО ПРОШЛО" ===== */
   .elapsed-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -370,7 +356,6 @@
     text-shadow: 0 0 15px rgba(255, 248, 240, 0.5);
   }
 
-  /* ===== ПЛЕЙЛИСТ ===== */
   .playlist {
     display: flex;
     flex-direction: column;
@@ -452,6 +437,7 @@
     cursor: pointer;
     position: relative;
     overflow: hidden;
+    touch-action: none;
   }
   .pl-progress-fill {
     height: 100%; width: 0%;
@@ -467,7 +453,6 @@
     font-family: 'Courier New', monospace;
   }
 
-  /* ===== КОСМИЧЕСКАЯ ИГРА ===== */
   .space-overlay {
     position: fixed; inset: 0;
     background: #0a0005;
@@ -611,7 +596,6 @@
     flex-shrink: 0;
   }
 
-  /* ===== РЕЖИМ ПРАЗДНИКА ===== */
   .celebrate h1 { animation: celebratePulse 1.5s infinite; }
   @keyframes celebratePulse {
     0%, 100% { transform: scale(1); }
@@ -624,7 +608,6 @@
   .celebrate .celebration-banner { display: block; animation: pop 0.8s ease; }
   .celebrate .timer { display: none; }
 
-  /* ===== АДАПТИВ ===== */
   @media (max-width: 500px) {
     .frame { padding: 35px 15px; }
     .time-box { min-width: 70px; padding: 14px 8px; }
@@ -699,9 +682,9 @@
     <div class="modal-title">❦ Послание для тебя ❦</div>
 
     <div class="photo-row">
-      <div class="photo-frame"><img src="https://i.ibb.co/1tqQn209/IMG-9868.jpg" alt="Детское фото 1"></div>
-      <div class="photo-frame"><img src="https://i.ibb.co/2Lyy6MS/226-C5-A64-CD82-429-C-A594-F825-B9-F04859.png" alt="Детское фото 2"></div>
-      <div class="photo-frame"><img src="https://i.ibb.co/HLWCWpHx/IMG-0140.png" alt="Детское фото 3"></div>
+      <div class="photo-frame"><img src="https://files.catbox.moe/htq6t5.png" alt="Детское фото 1"></div>
+      <div class="photo-frame"><img src="https://files.catbox.moe/y8jfxw.jpeg" alt="Детское фото 2"></div>
+      <div class="photo-frame"><img src="https://files.catbox.moe/yfi8cq.png" alt="Детское фото 3"></div>
     </div>
 
     <div class="letter-text">
@@ -771,7 +754,7 @@
     </div>
 
     <div class="pl-progress-wrap">
-      <div class="pl-progress" id="plProgress" onclick="playlistSeek(event)">
+      <div class="pl-progress" id="plProgress">
         <div class="pl-progress-fill" id="plProgressFill"></div>
       </div>
       <div class="pl-time">
@@ -1060,11 +1043,6 @@
   shakeStyle.textContent = '@keyframes shake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-6px);} 75%{transform:translateX(6px);} }';
   document.head.appendChild(shakeStyle);
 
-  if (isBirthdayUnlocked()) {
-    unlockSecret();
-    startFireworks();
-  }
-
   /* ================= МУЗЫКА ================= */
   const music = document.getElementById('bgMusic');
   const gameMusic = document.getElementById('gameMusic');
@@ -1075,8 +1053,25 @@
   music.volume = 0.6;
   gameMusic.volume = 0.5;
 
+  function stopMainMusic() {
+    if (music && !music.paused) {
+      music.pause();
+      musicBtn.textContent = '🎵';
+      musicBtn.classList.remove('playing');
+    }
+  }
+
   function toggleMusic() {
     if (music.paused) {
+      // Останавливаем музыку плейлиста и игры, чтобы не было наложения
+      if (typeof plAudio !== 'undefined' && plAudio && !plAudio.paused) {
+        plAudio.pause();
+        updatePlBtn();
+        renderPlaylist();
+      }
+      if (gameMusic && !gameMusic.paused) {
+        gameMusic.pause();
+      }
       music.play().then(() => {
         musicBtn.textContent = '🔊';
         musicBtn.classList.add('playing');
@@ -1106,6 +1101,7 @@
   let plCurrent = -1;
   let plAudio = new Audio();
   plAudio.volume = 0.7;
+  let plScrubbing = false;
 
   function renderPlaylist() {
     const box = document.getElementById('playlistContainer');
@@ -1132,6 +1128,11 @@
       playlistToggle();
       return;
     }
+    // Останавливаем фоновую музыку главной и музыку игры
+    stopMainMusic();
+    if (gameMusic && !gameMusic.paused) {
+      gameMusic.pause();
+    }
     plCurrent = i;
     plAudio.src = PLAYLIST_TRACKS[i].src;
     plAudio.play().catch(() => {});
@@ -1144,8 +1145,16 @@
       if (PLAYLIST_TRACKS.length > 0) playlistPlay(0);
       return;
     }
-    if (plAudio.paused) plAudio.play().catch(() => {});
-    else plAudio.pause();
+    if (plAudio.paused) {
+      // Останавливаем фоновую и игровую музыку
+      stopMainMusic();
+      if (gameMusic && !gameMusic.paused) {
+        gameMusic.pause();
+      }
+      plAudio.play().catch(() => {});
+    } else {
+      plAudio.pause();
+    }
     updatePlBtn();
     renderPlaylist();
   }
@@ -1173,15 +1182,28 @@
     return m + ':' + String(sec).padStart(2, '0');
   }
 
-  function playlistSeek(e) {
+  function playlistSeekPct(pct) {
     if (!plAudio.duration) return;
-    const bar = document.getElementById('plProgress');
-    const rect = bar.getBoundingClientRect();
-    const pct = (e.clientX - rect.left) / rect.width;
+    pct = Math.max(0, Math.min(1, pct));
     plAudio.currentTime = pct * plAudio.duration;
+    const fill = document.getElementById('plProgressFill');
+    const cur = document.getElementById('plCurrent');
+    if (fill) fill.style.width = (pct * 100) + '%';
+    if (cur) cur.textContent = formatTime(pct * plAudio.duration);
+  }
+
+  function playlistSeekFromEvent(e) {
+    const bar = document.getElementById('plProgress');
+    if (!bar) return;
+    const rect = bar.getBoundingClientRect();
+    let clientX = e.clientX;
+    if (e.touches && e.touches[0]) clientX = e.touches[0].clientX;
+    else if (e.changedTouches && e.changedTouches[0]) clientX = e.changedTouches[0].clientX;
+    playlistSeekPct((clientX - rect.left) / rect.width);
   }
 
   plAudio.addEventListener('timeupdate', () => {
+    if (plScrubbing) return;
     const fill = document.getElementById('plProgressFill');
     const cur = document.getElementById('plCurrent');
     if (plAudio.duration && fill && cur) {
@@ -1203,6 +1225,25 @@
     document.body.style.overflow = 'hidden';
   }
 
+  // Настраиваем перемотку перетаскиванием
+  document.addEventListener('DOMContentLoaded', () => {
+    const bar = document.getElementById('plProgress');
+    if (!bar) return;
+
+    bar.addEventListener('pointerdown', (e) => {
+      plScrubbing = true;
+      try { bar.setPointerCapture(e.pointerId); } catch (_) {}
+      playlistSeekFromEvent(e);
+    });
+    bar.addEventListener('pointermove', (e) => {
+      if (!plScrubbing) return;
+      playlistSeekFromEvent(e);
+    });
+    bar.addEventListener('pointerup', () => { plScrubbing = false; });
+    bar.addEventListener('pointercancel', () => { plScrubbing = false; });
+    bar.addEventListener('pointerleave', () => { plScrubbing = false; });
+  });
+
   /* ================= МУЗЫКА ИГРЫ ================= */
   let gamePaused = false;
   let gameMusicOn = true;
@@ -1215,6 +1256,13 @@
       btn.textContent = '🔇';
       btn.classList.add('off');
     } else {
+      // Останавливаем фоновую и плейлист
+      stopMainMusic();
+      if (plAudio && !plAudio.paused) {
+        plAudio.pause();
+        updatePlBtn();
+        renderPlaylist();
+      }
       gameMusic.play().catch(() => {});
       gameMusicOn = true;
       btn.textContent = '🎵';
@@ -1306,6 +1354,11 @@
         createFirework(Math.random() * canvas.width, Math.random() * canvas.height * 0.5);
       }, i * 300);
     }
+  }
+
+  if (isBirthdayUnlocked()) {
+    unlockSecret();
+    startFireworks();
   }
 
   /* ================= КОСМИЧЕСКАЯ ИГРА ================= */
@@ -1518,6 +1571,14 @@
     space.rocketX = space.w / 2;
     space.targetX = space.w / 2;
 
+    // Останавливаем фоновую музыку главной и плейлист
+    stopMainMusic();
+    if (plAudio && !plAudio.paused) {
+      plAudio.pause();
+      updatePlBtn();
+      renderPlaylist();
+    }
+
     gamePaused = false;
     document.getElementById('gamePauseBtn').textContent = '⏸';
     if (gameMusicOn) {
@@ -1548,6 +1609,14 @@
   function openSpaceGame() {
     document.getElementById('spaceOverlay').classList.add('active');
     document.body.style.overflow = 'hidden';
+
+    // Останавливаем фоновую музыку главной и плейлист
+    stopMainMusic();
+    if (plAudio && !plAudio.paused) {
+      plAudio.pause();
+      updatePlBtn();
+      renderPlaylist();
+    }
 
     gamePaused = false;
     document.getElementById('gamePauseBtn').textContent = '⏸';
